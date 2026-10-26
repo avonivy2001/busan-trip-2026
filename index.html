@@ -102,6 +102,7 @@ section{padding:22px 14px 4px;scroll-margin-top:128px}
 .ti .mini svg{width:20px;height:20px}
 .ti .track .desc{color:var(--ink);opacity:.75}
 .ti .badge.alt{background:var(--yellow);color:var(--ink)}
+.ti .warn{font-size:12px;margin-top:6px;padding:4px 8px;border:2px dashed var(--ink);border-radius:10px;background:var(--card)}
 .ti .badge{display:inline-block;font-size:11px;background:var(--red);color:#fff;border:2px solid var(--ink);border-radius:999px;padding:0 7px;margin-left:4px;vertical-align:2px}
 
 /* prep */
@@ -316,6 +317,8 @@ footer{text-align:center;font-size:12px;color:var(--muted);padding:18px 14px 0}
       <li><span class="k">交通</span><span>10 人約 3 台一般計程車或 2 台大型計程車；可用 Kakao T / Uber 叫車。</span></li>
       <li><span class="k">現金</span><span>札嘎其市場 2 樓部分店家偏好現金，備些韓元。</span></li>
       <li><span class="k">日落</span><span>約 17:15，青沙浦看夕陽排 16:30。</span></li>
+      <li><span class="k">無人機</span><span>11/21（六）21:00 廣安里；雨天或強風可能取消，當天先查官網。</span></li>
+      <li><span class="k">退稅</span><span>Olive Young 單筆滿 ₩15,000 可退稅，要帶護照正本；結帳前先問能否現場即時退稅。</span></li>
       <li><span class="k">術後</span><span>醫美後加強防曬保濕，當晚搭機記得補水。</span></li>
     </ul>
   </div>
@@ -343,6 +346,11 @@ footer{text-align:center;font-size:12px;color:var(--muted);padding:18px 14px 0}
     subway:`<svg width="24" height="24" viewBox="0 0 24 24" ${S}><rect x="6" y="3" width="12" height="15" rx="3" fill="#BFE3C0"/><path d="M6 11h12"/><path d="M8 21l2-3M16 21l-2-3"/></svg>`,
     spark:`<svg width="24" height="24" viewBox="0 0 24 24" ${S}><path d="M12 2l2 6 6 2-6 2-2 6-2-6-6-2 6-2z" fill="#FFD866"/><path d="M19 16l1 2 2 1-2 1-1 2-1-2-2-1 2-1z" fill="#fff"/></svg>`,
     lug:`<svg width="24" height="24" viewBox="0 0 24 24" ${S}><rect x="6" y="6" width="12" height="14" rx="2" fill="#A9D4EC"/><path d="M10 6V3h4v3M10 10v6M14 10v6"/></svg>`,
+    drone:`<svg width="24" height="24" viewBox="0 0 24 24" ${S}><rect x="8" y="10" width="8" height="5" rx="2" fill="#FFD866"/><path d="M8 12H4M16 12h4M4 9v3M20 9v3"/><path d="M2 9h4M18 9h4"/><path d="M10 15l-1 3M14 15l1 3"/></svg>`,
+    cable:`<svg width="24" height="24" viewBox="0 0 24 24" ${S}><path d="M2 4l20 5"/><path d="M12 6.5V10"/><rect x="6" y="10" width="12" height="10" rx="3" fill="#E0644E"/><path d="M9 13h6"/></svg>`,
+    tower:`<svg width="24" height="24" viewBox="0 0 24 24" ${S}><path d="M10 21l1-12h2l1 12z" fill="#fff"/><ellipse cx="12" cy="8" rx="5" ry="2.5" fill="#A9D4EC"/><path d="M12 5.5V2M5 21h14"/></svg>`,
+    market:`<svg width="24" height="24" viewBox="0 0 24 24" ${S}><path d="M3 10l2-6h14l2 6z" fill="#E0644E"/><path d="M5 10v10h14V10"/><path d="M10 20v-5h4v5"/><circle cx="7" cy="7" r=".5"/></svg>`,
+    lipstick:`<svg width="24" height="24" viewBox="0 0 24 24" ${S}><rect x="8" y="12" width="8" height="9" rx="1.5" fill="#BFE3C0"/><path d="M9 12V7l6-3v8" fill="#E0644E"/></svg>`,
     moon:`<svg width="24" height="24" viewBox="0 0 24 24" ${S}><path d="M19 15A8 8 0 1 1 10 4a6 6 0 0 0 9 11z" fill="#FFD866"/></svg>`
   };
   const robot = `<svg class="bot" width="30" height="24" viewBox="0 0 30 24" fill="none" stroke="#1E1B18" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"><path d="M15 1v4"/><circle cx="15" cy="2" r="1.6" fill="#FFD866"/><rect x="4" y="5" width="22" height="16" rx="6" fill="#E0644E"/><rect x="1" y="10" width="3" height="6" rx="1.5" fill="#E0644E"/><rect x="26" y="10" width="3" height="6" rx="1.5" fill="#E0644E"/><circle cx="11" cy="12.5" r="2.2" fill="#fff"/><circle cx="19" cy="12.5" r="2.2" fill="#fff"/><circle cx="11.5" cy="12.8" r="1" fill="#1E1B18" stroke="none"/><circle cx="19.5" cy="12.8" r="1" fill="#1E1B18" stroke="none"/><path d="M12 17.5q3 2 6 0"/></svg>`;
@@ -352,12 +360,15 @@ footer{text-align:center;font-size:12px;color:var(--muted);padding:18px 14px 0}
 
   /* ---------- itinerary data ---------- */
   const DAYS = [
-    { key:'d1', d:'11/21', w:'六', title:'Day 1・抵達＋札嘎其海鮮', theme:'南浦洞', items:[
+    { key:'d1', d:'11/21', w:'六', title:'Day 1・海鮮＋無人機秀', theme:'南浦・廣安里', items:[
       {t:'15:45', i:'plane', c:'blue', n:'抵達金海機場', s:'入境、領行李，預估 16:30–16:45 出關'},
       {t:'16:45', i:'car', c:'yellow', n:'機場 → 飯店', s:'計程車約 35–45 分、每台約 ₩18,000–22,000；10 人搭 3 台或 2 台大型計程車／包車'},
       {t:'17:30', i:'hotel', c:'blue', n:'Hotel Ground27 入住', s:'入住 16:00 起，放好行李', g:'Hotel Ground27 Busan', k:'호텔그라운드27'},
-      {t:'18:30', i:'fish', c:'red', n:'札嘎其市場 海鮮晚餐', s:'1 樓買海鮮、2 樓代客料理；入席費每人約 ₩5,000，10 人分 2 桌', hl:true, star:'必吃', g:'Jagalchi Market Busan', k:'자갈치시장'},
-      {t:'20:30', i:'walk', c:'green', n:'BIFF 廣場・光復路散步', s:'吃小吃、逛街，第一天早點休息', g:'BIFF Square Busan', k:'BIFF광장'}
+      {t:'18:00', i:'fish', c:'red', n:'札嘎其市場 海鮮晚餐', s:'1 樓買海鮮、2 樓代客料理；入席費每人約 ₩5,000，10 人分 2 桌；19:45 前吃完', hl:true, star:'必吃', g:'Jagalchi Market Busan', k:'자갈치시장'},
+      {t:'19:50', i:'car', c:'yellow', n:'南浦 → 廣安里', s:'計程車 3 台，週六晚上預留 40 分鐘', g:'Gwangalli Beach', k:'광안리해수욕장'},
+      {t:'21:00', i:'drone', c:'blue', n:'廣安里 M 無人機×雷射秀', s:'冬季每週六 19:00、21:00 兩場，每場約 12 分鐘；11/21 主題「城堡守護者」，在沙灘就能看到廣安大橋背景', hl:true, star:'週六限定', w:'雨天、強風可能取消或延後，當天先看官網 gwangallimdrone.co.kr；取消就留在南浦，改逛富平罐頭夜市＋光復路', g:'Gwangalli Beach', k:'광안리해수욕장'},
+      {t:'21:20', i:'subway', c:'green', n:'廣安里 → 南浦', s:'散場後計程車難叫，可改搭地鐵 2 號線廣安站 → 西面轉 1 號線 → 札嘎其站，約 45 分'},
+      {t:'22:10', i:'market', c:'yellow', n:'富平罐頭夜市 宵夜', s:'夜市每天 19:30–24:00，就在國際市場旁，走回飯店約 10 分', g:'Bupyeong Kkangtong Night Market', k:'부평깡통야시장'}
     ]},
     { key:'d2', d:'11/22', w:'日', title:'Day 2・甘川＋海雲台＋青沙浦', theme:'海景日', items:[
       {t:'09:30', i:'car', c:'yellow', n:'飯店 → 甘川文化村', s:'計程車 3 台，約 15–20 分'},
@@ -368,9 +379,11 @@ footer{text-align:center;font-size:12px;color:var(--muted);padding:18px 14px 0}
       {t:'15:00', i:'train', c:'blue', n:'藍線公園 尾浦 → 青沙浦', s:'海岸列車或天空膠囊（每車 2–4 人，10 人需 3 車）；沒訂到可沿步道走', g:'Haeundae Blueline Park Mipo Station', k:'해운대블루라인파크 미포정거장'},
       {t:'16:00', i:'light', c:'red', n:'青沙浦 紅白雙燈塔', s:'平交道、踏石展望台；日落約 17:15', g:'Cheongsapo Twin Lighthouse', k:'청사포 쌍둥이등대'},
       {t:'16:30', i:'shell', c:'red', n:'青沙浦 烤貝晚餐', s:'看夕陽吃炭火烤貝；10 人請先聯絡店家', hl:true, star:'必吃', g:'Cheongsapo grilled clams', k:'청사포 조개구이'},
-      {t:'18:45', i:'moon', c:'yellow', n:'回南浦洞飯店', s:'計程車約 45–60 分；想看夜景可改去廣安里'}
+      {t:'18:45', i:'car', c:'yellow', n:'回南浦洞', s:'計程車約 45–60 分'},
+      {t:'20:00', i:'tower', c:'red', n:'釜山塔・龍頭山公園 夜景', s:'從光復路搭手扶梯上山，飯店步行可到；每天 10:00–22:00（售票到 21:30）', g:'Busan Tower Yongdusan Park', k:'부산타워'},
+      {t:'21:00', i:'moon', c:'yellow', n:'回飯店休息', s:''}
     ]},
-    { key:'d3', d:'11/23', w:'一', title:'Day 3・西面醫美＋回程', theme:'西面', items:[
+    { key:'d3', d:'11/23', w:'一', title:'Day 3・醫美＋松島＋OY', theme:'西面・松島', items:[
       {t:'08:30', i:'lug', c:'blue', n:'早餐・退房・寄放行李', s:'退房 11:00 前；寄放方式請向櫃台確認'},
       {t:'09:15', i:'subway', c:'green', n:'南浦 → 西面', s:'地鐵 1 號線約 20 分，刷 T-money'},
       {split:true, t:'10:00–13:00', n:'分頭行動', tracks:[
@@ -379,9 +392,12 @@ footer{text-align:center;font-size:12px;color:var(--muted);padding:18px 14px 0}
       ]},
       {t:'13:00', i:'walk', c:'red', n:'全員會合：西面站 7 號出口', s:'ION City 大樓前（BANOBAGI 所在大樓）；醫美組晚到就先傳 LINE 群組', hl:true, star:'會合'},
       {t:'13:10', i:'bowl', c:'yellow', n:'西面午餐', s:'西面豬肉湯飯一條街', g:'Seomyeon pork soup street', k:'서면 돼지국밥골목'},
-      {t:'14:30', i:'subway', c:'green', n:'西面 → 南浦', s:'地鐵 1 號線約 20 分'},
-      {t:'15:00', i:'bag', c:'yellow', n:'國際市場・光復路 伴手禮', s:'輕鬆逛，不排戶外大景點；醫美組注意防曬', g:'Gukje Market Busan', k:'국제시장'},
-      {t:'17:30', i:'bowl', c:'yellow', n:'南浦洞晚餐', s:'吃簡單一點，留時間給機場'},
+      {t:'14:15', i:'car', c:'yellow', n:'西面 → 松島', s:'計程車 3 台，約 30–40 分'},
+      {t:'14:50', i:'cable', c:'blue', n:'松島海上纜車', s:'11 月 09:00–21:00；來回一般車廂 ₩19,000、水晶車廂 ₩24,000；每車最多 8 人，10 人分 2 車', g:'Busan Air Cruise Songdo', k:'송도해상케이블카'},
+      {t:'15:40', i:'walk', c:'green', n:'松島龍宮雲橋', s:'冬季 09:00 開放，最晚 16:30 前入場；入場費 ₩1,000（10 人以上 ₩800）；11/23 是第 4 個週一，照常開放', w:'每月第 1、3 個週一休息，強風等天候不佳也會關閉', g:'Songdo Yonggung Suspension Bridge', k:'송도용궁구름다리'},
+      {t:'16:20', i:'car', c:'yellow', n:'松島 → 南浦', s:'計程車約 15 分'},
+      {t:'16:40', i:'lipstick', c:'red', n:'Olive Young 南浦 Town 購物', s:'BIFF 廣場路 40，4 層樓，釜山最大間；每天 10:00–22:30；帶護照，付款前先問能否即時退稅', hl:true, star:'女生必逛', g:'Olive Young Nampo Town', k:'올리브영 남포 타운'},
+      {t:'17:45', i:'bowl', c:'yellow', n:'南浦洞簡單晚餐', s:'BIFF 廣場小吃或附近餐廳，18:25 前吃完'},
       {t:'18:30', i:'lug', c:'blue', n:'回飯店拿行李', s:'18:45 搭大型計程車／包車出發'},
       {t:'19:30', i:'plane', c:'blue', n:'抵達金海機場報到', s:'22:00 起飛 → 23:50 桃園 T1', hl:true}
     ]}
@@ -418,6 +434,7 @@ footer{text-align:center;font-size:12px;color:var(--muted);padding:18px 14px 0}
             <span class="tlabel">${tr.label}</span>
             <div class="tname"><span class="mini">${I[tr.i]||''}</span>${tr.n}${tr.star?`<span class="badge">${tr.star}</span>`:''}</div>
             <div class="desc">${tr.s}</div>
+            ${tr.w?`<div class="warn">⚠️ ${tr.w}</div>`:''}
             ${mapBtns(tr)}
           </div>`).join('')}
         </div>
@@ -427,7 +444,8 @@ footer{text-align:center;font-size:12px;color:var(--muted);padding:18px 14px 0}
         <div class="box">
           <div class="time">${it.t}</div>
           <div class="name">${it.n}${it.star?`<span class="badge">${it.star}</span>`:''}</div>
-          <div class="desc">${it.s}</div>
+          ${it.s?`<div class="desc">${it.s}</div>`:''}
+          ${it.w?`<div class="warn">⚠️ ${it.w}</div>`:''}
           ${mapBtns(it)}
         </div>
       </div>`).join('');
@@ -462,7 +480,9 @@ footer{text-align:center;font-size:12px;color:var(--muted);padding:18px 14px 0}
     {id:'blueline', m:'天空膠囊列車／海岸列車票', s:'11/22 15:00 前後 尾浦出發；官網每週二 07:00 開賣'},
     {id:'hotel-bag', m:'問飯店寄放行李', s:'11/23 退房後寄放到 18:30'},
     {id:'checkin', m:'網路報到', s:'依航空公司開放時間辦理'},
-    {id:'shellfish', m:'聯絡青沙浦烤貝店 10 人座位', s:'11/22 16:30'}
+    {id:'shellfish', m:'聯絡青沙浦烤貝店 10 人座位', s:'11/22 16:30'},
+    {id:'drone', m:'11/21 當天確認無人機秀是否照常', s:'gwangallimdrone.co.kr；雨天、強風會取消'},
+    {id:'oylist', m:'整理 Olive Young 購物清單', s:'11/23 16:40 只有約 1 小時，先列好品名、帶護照'}
   ];
   const KEY = 'busan-todo-v1';
   let state = {}; try{ state = JSON.parse(localStorage.getItem(KEY)||'{}'); }catch(e){}
