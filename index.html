@@ -90,6 +90,18 @@ section{padding:22px 14px 4px;scroll-margin-top:128px}
 .ti .maps{display:flex;gap:6px;margin-top:7px;flex-wrap:wrap}
 .ti .maps a{font-size:12px;text-decoration:none;border:2px solid var(--ink);border-radius:999px;padding:1px 9px;background:var(--bg)}
 .ti .maps a:active{background:var(--yellow)}
+.ti .group{border:var(--bw) dashed var(--ink);border-radius:14px;padding:9px 10px;background:var(--bg)}
+.ti .track{background:var(--card);border:var(--bw) solid var(--ink);border-radius:12px;padding:8px 10px;margin-top:8px}
+.ti .track.a{background:var(--red-soft)}
+.ti .track.b{background:var(--blue-soft)}
+.ti .tlabel{display:inline-block;font-size:12px;border:2px solid var(--ink);border-radius:999px;padding:0 9px;background:var(--card);margin-bottom:4px}
+.ti .track.a .tlabel{background:var(--red);color:#fff}
+.ti .track.b .tlabel{background:var(--blue)}
+.ti .tname{font-size:15px;line-height:1.35;display:flex;align-items:center;flex-wrap:wrap;gap:4px}
+.ti .mini{display:inline-grid;place-items:center;width:22px;height:22px}
+.ti .mini svg{width:20px;height:20px}
+.ti .track .desc{color:var(--ink);opacity:.75}
+.ti .badge.alt{background:var(--yellow);color:var(--ink)}
 .ti .badge{display:inline-block;font-size:11px;background:var(--red);color:#fff;border:2px solid var(--ink);border-radius:999px;padding:0 7px;margin-left:4px;vertical-align:2px}
 
 /* prep */
@@ -283,7 +295,7 @@ footer{text-align:center;font-size:12px;color:var(--muted);padding:18px 14px 0}
       </div>
       <div>
         <h3>BANOBAGI 佰諾佰琪・西面</h3>
-        <p>11/23 (一) 上午・10 人請提早預約</p>
+        <p>11/23 (一) 上午・醫美組 3 人，請提早預約</p>
       </div>
     </div>
     <dl class="info">
@@ -361,11 +373,14 @@ footer{text-align:center;font-size:12px;color:var(--muted);padding:18px 14px 0}
     { key:'d3', d:'11/23', w:'一', title:'Day 3・西面醫美＋回程', theme:'西面', items:[
       {t:'08:30', i:'lug', c:'blue', n:'早餐・退房・寄放行李', s:'退房 11:00 前；寄放方式請向櫃台確認'},
       {t:'09:15', i:'subway', c:'green', n:'南浦 → 西面', s:'地鐵 1 號線約 20 分，刷 T-money'},
-      {t:'10:00', i:'spark', c:'red', n:'BANOBAGI 佰諾佰琪 醫美', s:'西面站 5、7 號出口步行 1 分；14:00–15:00 午休，10 人分批進行', hl:true, star:'預約', g:'Banobagi Clinic Busan Seomyeon', k:'바노바기의원 부산'},
-      {t:'10:00', i:'bag', c:'yellow', n:'不做醫美的人：西面逛街', s:'西面地下街、樂天百貨、田浦咖啡街', g:'Jeonpo Cafe Street', k:'전포카페거리'},
-      {t:'14:00', i:'bowl', c:'yellow', n:'西面午餐', s:'西面豬肉湯飯一條街', g:'Seomyeon pork soup street', k:'서면 돼지국밥골목'},
-      {t:'15:30', i:'subway', c:'green', n:'西面 → 南浦', s:'地鐵 1 號線約 20 分'},
-      {t:'16:00', i:'bag', c:'yellow', n:'國際市場・光復路 伴手禮', s:'輕鬆逛，不排戶外大景點', g:'Gukje Market Busan', k:'국제시장'},
+      {split:true, t:'10:00–13:00', n:'分頭行動', tracks:[
+        {label:'醫美組 3 人', cls:'a', i:'spark', n:'BANOBAGI 佰諾佰琪・西面', s:'西面站 5、7 號出口步行 1 分，ION City 大樓 16 樓；診所 14:00 午休，預約 10:00 開診時段', star:'預約', g:'Banobagi Clinic Busan Seomyeon', k:'바노바기의원 부산'},
+        {label:'其他 7 人', cls:'b', i:'bag', n:'田浦咖啡街早午餐＋西面逛街', s:'10:00 田浦咖啡街喝咖啡、吃早午餐；11:30 起逛西面地下街、樂天百貨，12:50 往會合點', g:'Jeonpo Cafe Street', k:'전포카페거리'}
+      ]},
+      {t:'13:00', i:'walk', c:'red', n:'全員會合：西面站 7 號出口', s:'ION City 大樓前（BANOBAGI 所在大樓）；醫美組晚到就先傳 LINE 群組', hl:true, star:'會合'},
+      {t:'13:10', i:'bowl', c:'yellow', n:'西面午餐', s:'西面豬肉湯飯一條街', g:'Seomyeon pork soup street', k:'서면 돼지국밥골목'},
+      {t:'14:30', i:'subway', c:'green', n:'西面 → 南浦', s:'地鐵 1 號線約 20 分'},
+      {t:'15:00', i:'bag', c:'yellow', n:'國際市場・光復路 伴手禮', s:'輕鬆逛，不排戶外大景點；醫美組注意防曬', g:'Gukje Market Busan', k:'국제시장'},
       {t:'17:30', i:'bowl', c:'yellow', n:'南浦洞晚餐', s:'吃簡單一點，留時間給機場'},
       {t:'18:30', i:'lug', c:'blue', n:'回飯店拿行李', s:'18:45 搭大型計程車／包車出發'},
       {t:'19:30', i:'plane', c:'blue', n:'抵達金海機場報到', s:'22:00 起飛 → 23:50 桃園 T1', hl:true}
@@ -391,14 +406,29 @@ footer{text-align:center;font-size:12px;color:var(--muted);padding:18px 14px 0}
     const d = DAYS[idx];
     document.getElementById('dayTitle').textContent = d.title;
     document.getElementById('dayTheme').textContent = d.theme;
-    tl.innerHTML = d.items.map((it, n) => `
+    const mapBtns = it => it.g?`<div class="maps"><a target="_blank" rel="noopener" href="${N(it.k)}">Naver 地圖</a><a target="_blank" rel="noopener" href="${G(it.g)}">Google 地圖</a></div>`:'';
+    tl.innerHTML = d.items.map((it, n) => it.split ? `
+      <div class="ti split" style="animation-delay:${n*40}ms">
+        <div class="node c-yellow"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#1E1B18" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21v-8M12 13L5 6M12 13l7-7M5 6v4M5 6h4M19 6v4M19 6h-4"/></svg></div>
+        <div class="group">
+          <div class="time">${it.t}</div>
+          <div class="name">${it.n}<span class="badge alt">兩組同時</span></div>
+          ${it.tracks.map(tr=>`
+          <div class="track ${tr.cls}">
+            <span class="tlabel">${tr.label}</span>
+            <div class="tname"><span class="mini">${I[tr.i]||''}</span>${tr.n}${tr.star?`<span class="badge">${tr.star}</span>`:''}</div>
+            <div class="desc">${tr.s}</div>
+            ${mapBtns(tr)}
+          </div>`).join('')}
+        </div>
+      </div>` : `
       <div class="ti${it.hl?' hl':''}" style="animation-delay:${n*40}ms">
         <div class="node c-${it.c}">${I[it.i]||''}</div>
         <div class="box">
           <div class="time">${it.t}</div>
           <div class="name">${it.n}${it.star?`<span class="badge">${it.star}</span>`:''}</div>
           <div class="desc">${it.s}</div>
-          ${it.g?`<div class="maps"><a target="_blank" rel="noopener" href="${N(it.k)}">Naver 地圖</a><a target="_blank" rel="noopener" href="${G(it.g)}">Google 地圖</a></div>`:''}
+          ${mapBtns(it)}
         </div>
       </div>`).join('');
     try{ localStorage.setItem('busan-day', String(idx)); }catch(e){}
@@ -423,7 +453,7 @@ footer{text-align:center;font-size:12px;color:var(--muted);padding:18px 14px 0}
 
   /* ---------- todo list ---------- */
   const TODO = [
-    {id:'banobagi', m:'LINE 預約 BANOBAGI 10 人', s:'@banobagibs_tw・11/23 上午分批時段'},
+    {id:'banobagi', m:'LINE 預約 BANOBAGI 3 人', s:'@banobagibs_tw・醫美組 3 人，11/23 10:00 起的時段'},
     {id:'clinic-q', m:'問診所：行李寄放、翻譯、退稅', s:'醫美退稅各來源說法不一，以診所為準'},
     {id:'keta', m:'確認 K-ETA 免申請', s:'台灣護照至 2026/12/31 免申請 K-ETA，可免簽停留 90 天'},
     {id:'earrival', m:'填寫韓國電子入境申報 e-Arrival', s:'抵達前 3 天內（11/19 起，韓國時間）於 e-arrivalcard.go.kr 免費填寫'},
