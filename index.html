@@ -317,7 +317,7 @@ footer{text-align:center;font-size:12px;color:var(--muted);padding:18px 14px 0}
       <li><span class="k">交通</span><span>10 人約 3 台一般計程車或 2 台大型計程車；可用 Kakao T / Uber 叫車。</span></li>
       <li><span class="k">現金</span><span>札嘎其市場 2 樓部分店家偏好現金，備些韓元。</span></li>
       <li><span class="k">日落</span><span>約 17:15，青沙浦看夕陽排 16:30。</span></li>
-      <li><span class="k">無人機</span><span>11/21（六）21:00 廣安里；雨天或強風可能取消，當天先查官網。</span></li>
+      <li><span class="k">無人機</span><span>11/21（六）19:00 在廣安里石火緣邊吃邊看；雨天或強風可能取消，當天先查官網。</span></li>
       <li><span class="k">退稅</span><span>Olive Young 單筆滿 ₩15,000 可退稅，要帶護照正本；結帳前先問能否現場即時退稅。</span></li>
       <li><span class="k">術後</span><span>醫美後加強防曬保濕，當晚搭機記得補水。</span></li>
     </ul>
@@ -346,6 +346,7 @@ footer{text-align:center;font-size:12px;color:var(--muted);padding:18px 14px 0}
     subway:`<svg width="24" height="24" viewBox="0 0 24 24" ${S}><rect x="6" y="3" width="12" height="15" rx="3" fill="#BFE3C0"/><path d="M6 11h12"/><path d="M8 21l2-3M16 21l-2-3"/></svg>`,
     spark:`<svg width="24" height="24" viewBox="0 0 24 24" ${S}><path d="M12 2l2 6 6 2-6 2-2 6-2-6-6-2 6-2z" fill="#FFD866"/><path d="M19 16l1 2 2 1-2 1-1 2-1-2-2-1 2-1z" fill="#fff"/></svg>`,
     lug:`<svg width="24" height="24" viewBox="0 0 24 24" ${S}><rect x="6" y="6" width="12" height="14" rx="2" fill="#A9D4EC"/><path d="M10 6V3h4v3M10 10v6M14 10v6"/></svg>`,
+    grill:`<svg width="24" height="24" viewBox="0 0 24 24" ${S}><path d="M3 11h18a9 6 0 0 1-18 0z" fill="#3B3B3B"/><path d="M6 11V9M10 11V9M14 11V9M18 11V9"/><path d="M8 4c1 1-1 2 0 3M12 3c1 1-1 2 0 3M16 4c1 1-1 2 0 3"/><path d="M8 17l-2 4M16 17l2 4"/></svg>`,
     drone:`<svg width="24" height="24" viewBox="0 0 24 24" ${S}><rect x="8" y="10" width="8" height="5" rx="2" fill="#FFD866"/><path d="M8 12H4M16 12h4M4 9v3M20 9v3"/><path d="M2 9h4M18 9h4"/><path d="M10 15l-1 3M14 15l1 3"/></svg>`,
     cable:`<svg width="24" height="24" viewBox="0 0 24 24" ${S}><path d="M2 4l20 5"/><path d="M12 6.5V10"/><rect x="6" y="10" width="12" height="10" rx="3" fill="#E0644E"/><path d="M9 13h6"/></svg>`,
     tower:`<svg width="24" height="24" viewBox="0 0 24 24" ${S}><path d="M10 21l1-12h2l1 12z" fill="#fff"/><ellipse cx="12" cy="8" rx="5" ry="2.5" fill="#A9D4EC"/><path d="M12 5.5V2M5 21h14"/></svg>`,
@@ -360,22 +361,23 @@ footer{text-align:center;font-size:12px;color:var(--muted);padding:18px 14px 0}
 
   /* ---------- itinerary data ---------- */
   const DAYS = [
-    { key:'d1', d:'11/21', w:'六', title:'Day 1・海鮮＋無人機秀', theme:'南浦・廣安里', items:[
+    { key:'d1', d:'11/21', w:'六', title:'Day 1・廣安里烤肉＋無人機秀', theme:'廣安里', items:[
       {t:'15:45', i:'plane', c:'blue', n:'抵達金海機場', s:'入境、領行李，預估 16:30–16:45 出關'},
       {t:'16:45', i:'car', c:'yellow', n:'機場 → 飯店', s:'計程車約 35–45 分、每台約 ₩18,000–22,000；10 人搭 3 台或 2 台大型計程車／包車'},
-      {t:'17:30', i:'hotel', c:'blue', n:'Hotel Ground27 入住', s:'入住 16:00 起，放好行李', g:'Hotel Ground27 Busan', k:'호텔그라운드27'},
-      {t:'18:00', i:'fish', c:'red', n:'札嘎其市場 海鮮晚餐', s:'1 樓買海鮮、2 樓代客料理；入席費每人約 ₩5,000，10 人分 2 桌；19:45 前吃完', hl:true, star:'必吃', g:'Jagalchi Market Busan', k:'자갈치시장'},
-      {t:'19:50', i:'car', c:'yellow', n:'南浦 → 廣安里', s:'計程車 3 台，週六晚上預留 40 分鐘', g:'Gwangalli Beach', k:'광안리해수욕장'},
-      {t:'21:00', i:'drone', c:'blue', n:'廣安里 M 無人機×雷射秀', s:'冬季每週六 19:00、21:00 兩場，每場約 12 分鐘；11/21 主題「城堡守護者」，在沙灘就能看到廣安大橋背景', hl:true, star:'週六限定', w:'雨天、強風可能取消或延後，當天先看官網 gwangallimdrone.co.kr；取消就留在南浦，改逛富平罐頭夜市＋光復路', g:'Gwangalli Beach', k:'광안리해수욕장'},
-      {t:'21:20', i:'subway', c:'green', n:'廣安里 → 南浦', s:'散場後計程車難叫，可改搭地鐵 2 號線廣安站 → 西面轉 1 號線 → 札嘎其站，約 45 分'},
-      {t:'22:10', i:'market', c:'yellow', n:'富平罐頭夜市 宵夜', s:'夜市每天 19:30–24:00，就在國際市場旁，走回飯店約 10 分', g:'Bupyeong Kkangtong Night Market', k:'부평깡통야시장'}
+      {t:'17:30', i:'hotel', c:'blue', n:'Hotel Ground27 入住', s:'入住 16:00 起，放好行李就出發', g:'Hotel Ground27 Busan', k:'호텔그라운드27'},
+      {t:'17:45', i:'car', c:'yellow', n:'南浦 → 廣安里', s:'計程車 3 台，約 30–40 分；週六傍晚可能塞車'},
+      {t:'18:20', i:'grill', c:'red', n:'石火緣 석화연・海景烤肉晚餐', s:'廣安海邊路 199 2 樓，熟成韓豬、店員代烤；單點 130g ₩14,900 起，套餐 500g ₩57,000；靠窗位可看廣安大橋', hl:true, star:'邊吃邊看', w:'靠窗座位只有 4–5 桌，10 人不一定都坐得到窗邊；坐不到就 18:50 過馬路到沙灘看秀，再回來吃', g:'Seokhwayeon Gwangalli', k:'석화연 광안리'},
+      {t:'19:00', i:'drone', c:'blue', n:'廣安里 M 無人機×雷射秀（第 1 場）', s:'冬季每週六 19:00、21:00 兩場，每場約 12 分鐘；11/21 主題「城堡守護者」；看 19:00 場，回南浦才不會太晚', hl:true, star:'週六限定', w:'雨天、強風可能取消或延後，當天先看官網 gwangallimdrone.co.kr；取消一樣可以吃烤肉看廣安大橋夜景', g:'Gwangalli Beach', k:'광안리해수욕장'},
+      {t:'20:15', i:'car', c:'yellow', n:'廣安里 → 南浦', s:'計程車 3 台約 30–40 分；叫不到車可搭地鐵 2 號線廣安站 → 西面轉 1 號線 → 札嘎其站，約 45 分'},
+      {t:'21:00', i:'market', c:'yellow', n:'富平罐頭夜市 散步吃宵夜', s:'夜市 19:30–24:00，就在國際市場旁，走回飯店約 10 分；累了可直接回飯店', g:'Bupyeong Kkangtong Night Market', k:'부평깡통야시장'}
     ]},
-    { key:'d2', d:'11/22', w:'日', title:'Day 2・甘川＋海雲台＋青沙浦', theme:'海景日', items:[
+    { key:'d2', d:'11/22', w:'日', title:'Day 2・甘川＋札嘎其＋青沙浦', theme:'海鮮日', items:[
       {t:'09:30', i:'car', c:'yellow', n:'飯店 → 甘川文化村', s:'計程車 3 台，約 15–20 分'},
       {t:'09:45', i:'village', c:'green', n:'甘川文化村', s:'散步拍照，山坡多請穿好走的鞋', g:'Gamcheon Culture Village', k:'감천문화마을'},
-      {t:'12:00', i:'bowl', c:'yellow', n:'午餐・南浦洞或甘川附近', s:'豬肉湯飯、小麥麵等釜山平價美食'},
-      {t:'13:00', i:'car', c:'yellow', n:'→ 海雲台 尾浦', s:'計程車約 40–50 分'},
-      {t:'14:00', i:'beach', c:'blue', n:'海雲台海水浴場', s:'海邊風大，帶防風外套', g:'Haeundae Beach', k:'해운대해수욕장'},
+      {t:'11:30', i:'car', c:'yellow', n:'甘川 → 札嘎其市場', s:'計程車約 15–20 分'},
+      {t:'11:50', i:'fish', c:'red', n:'札嘎其市場 海鮮午餐', s:'1 樓買海鮮、2 樓代客料理；入席費每人約 ₩5,000，10 人分 2 桌；晚上還有烤貝，中午可以點少一點', hl:true, star:'必吃', g:'Jagalchi Market Busan', k:'자갈치시장'},
+      {t:'13:15', i:'car', c:'yellow', n:'札嘎其 → 海雲台 尾浦', s:'計程車約 40–50 分'},
+      {t:'14:05', i:'beach', c:'blue', n:'海雲台海水浴場', s:'海邊風大，帶防風外套', g:'Haeundae Beach', k:'해운대해수욕장'},
       {t:'15:00', i:'train', c:'blue', n:'藍線公園 尾浦 → 青沙浦', s:'海岸列車或天空膠囊（每車 2–4 人，10 人需 3 車）；沒訂到可沿步道走', g:'Haeundae Blueline Park Mipo Station', k:'해운대블루라인파크 미포정거장'},
       {t:'16:00', i:'light', c:'red', n:'青沙浦 紅白雙燈塔', s:'平交道、踏石展望台；日落約 17:15', g:'Cheongsapo Twin Lighthouse', k:'청사포 쌍둥이등대'},
       {t:'16:30', i:'shell', c:'red', n:'青沙浦 烤貝晚餐', s:'看夕陽吃炭火烤貝；10 人請先聯絡店家', hl:true, star:'必吃', g:'Cheongsapo grilled clams', k:'청사포 조개구이'},
@@ -481,6 +483,7 @@ footer{text-align:center;font-size:12px;color:var(--muted);padding:18px 14px 0}
     {id:'hotel-bag', m:'問飯店寄放行李', s:'11/23 退房後寄放到 18:30'},
     {id:'checkin', m:'網路報到', s:'依航空公司開放時間辦理'},
     {id:'shellfish', m:'聯絡青沙浦烤貝店 10 人座位', s:'11/22 16:30'},
+    {id:'seokhwa', m:'電話預約石火緣 10 人（11/21 18:20）', s:'051-754-3392；請求靠窗看廣安大橋的座位，訂不到就用 Tabling／CatchTable 排隊'},
     {id:'drone', m:'11/21 當天確認無人機秀是否照常', s:'gwangallimdrone.co.kr；雨天、強風會取消'},
     {id:'oylist', m:'整理 Olive Young 購物清單', s:'11/23 16:40 只有約 1 小時，先列好品名、帶護照'}
   ];
