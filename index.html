@@ -1,0 +1,480 @@
+<!DOCTYPE html>
+<html lang="zh-Hant-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#FBF3E4">
+<title>釜山 3天2夜｜11/21 – 11/23</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Huninn&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#FBF3E4; --card:#FFFDF8; --ink:#1E1B18; --muted:#6B625A;
+  --red:#E0644E; --red-soft:#F6C9BD; --yellow:#FFD866; --yellow-soft:#FFF0B8;
+  --blue:#A9D4EC; --blue-soft:#DDEFF8; --green:#BFE3C0;
+  --bw:2.5px; --r:18px;
+  --font:'Huninn','jf-openhuninn','Arial Rounded MT Bold','PingFang TC','Noto Sans TC','Noto Sans CJK TC','Microsoft JhengHei',sans-serif;
+}
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+html{scroll-behavior:smooth;background:var(--bg)}
+body{font-family:var(--font);color:var(--ink);background:var(--bg);line-height:1.5;font-size:15px;
+  max-width:480px;margin:0 auto;min-height:100vh;padding-bottom:40px}
+a{color:inherit}
+button{font-family:inherit;color:inherit;cursor:pointer}
+
+/* ---------- sticky header ---------- */
+header.top{position:sticky;top:0;z-index:20;background:var(--bg);border-bottom:var(--bw) solid var(--ink);padding:10px 14px 0}
+.tabs{display:flex;gap:8px}
+.tab{flex:1;border:var(--bw) solid var(--ink);border-radius:999px;background:var(--card);padding:7px 0;font-size:15px;letter-spacing:1px;transition:background .2s}
+.tab.active{background:var(--red);color:#fff}
+.dates{display:flex;gap:8px;padding:6px 0 10px}
+.date{flex:1;position:relative;border:var(--bw) solid var(--ink);border-radius:14px;background:var(--card);padding:26px 0 6px;text-align:center;transition:background .2s}
+.date .d{display:block;font-size:17px}
+.date .w{display:block;font-size:12px;color:var(--muted)}
+.date .bot{position:absolute;left:50%;top:4px;transform:translate(-50%,6px) scale(.6);opacity:0;transition:all .25s cubic-bezier(.3,1.6,.5,1)}
+.date.active{background:var(--yellow)}
+.date.active .w{color:var(--ink)}
+.date.active .bot{opacity:1;transform:translate(-50%,0) scale(1)}
+
+/* ---------- hero ---------- */
+.hero{padding:16px 14px 6px}
+.hero-art{border:var(--bw) solid var(--ink);border-radius:var(--r);overflow:hidden;background:var(--blue-soft);display:block}
+.hero-art svg{display:block;width:100%;height:auto}
+.hero h1{font-size:36px;letter-spacing:2px;margin-top:14px;line-height:1.2}
+.hero h1 .accent{color:var(--red)}
+.hero .sub{font-size:15px;color:var(--muted);margin-top:2px;letter-spacing:.5px}
+.pill{display:inline-flex;align-items:center;gap:6px;margin-top:10px;background:var(--yellow);border:var(--bw) solid var(--ink);border-radius:999px;padding:5px 14px;font-size:15px}
+.pill b{font-size:20px;font-weight:400;color:var(--red);-webkit-text-stroke:.4px var(--ink)}
+.chips{display:flex;flex-wrap:wrap;gap:6px;margin-top:10px}
+.chip{border:2px solid var(--ink);border-radius:999px;padding:2px 10px;font-size:13px;background:var(--card)}
+
+/* ---------- sections ---------- */
+section{padding:22px 14px 4px;scroll-margin-top:128px}
+.sec-title{display:flex;align-items:center;gap:8px;font-size:22px;margin-bottom:12px;letter-spacing:1px}
+.sec-title .num{display:inline-grid;place-items:center;width:30px;height:30px;border:var(--bw) solid var(--ink);border-radius:50%;background:var(--red);color:#fff;font-size:15px}
+.card{background:var(--card);border:var(--bw) solid var(--ink);border-radius:var(--r);padding:14px;margin-bottom:12px}
+
+/* flights */
+.flight .head{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px}
+.tag{border:2px solid var(--ink);border-radius:999px;padding:1px 12px;font-size:14px}
+.tag.out{background:var(--red);color:#fff}
+.tag.back{background:var(--blue)}
+.flight .day{font-size:14px;color:var(--muted)}
+.route{display:grid;grid-template-columns:auto 1fr auto;align-items:center;gap:8px}
+.route .pt .t{font-size:28px;line-height:1.1}
+.route .pt .p{font-size:13px;color:var(--muted)}
+.route .pt.r{text-align:right}
+.route .mid{text-align:center;font-size:12px;color:var(--muted)}
+.route .line{position:relative;height:18px;margin:2px 0}
+.route .line:before{content:"";position:absolute;left:0;right:0;top:8px;border-top:2.5px dashed var(--ink)}
+.route .line svg{position:absolute;left:50%;top:-3px;transform:translateX(-50%);background:var(--card);padding:0 3px}
+.note{font-size:13px;color:var(--muted);margin-top:10px;padding-top:8px;border-top:2px dashed #d8cdbd}
+
+/* timeline */
+.day-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:6px}
+.day-head h3{font-size:19px;font-weight:400}
+.day-head .theme{font-size:13px;background:var(--blue-soft);border:2px solid var(--ink);border-radius:999px;padding:1px 10px}
+.timeline{position:relative;padding-left:4px}
+.timeline:before{content:"";position:absolute;left:25px;top:10px;bottom:10px;width:3px;background:var(--ink);border-radius:2px}
+.ti{position:relative;display:grid;grid-template-columns:46px 1fr;gap:10px;padding:8px 0;animation:pop .35s ease both}
+@keyframes pop{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+.node{position:relative;z-index:1;width:44px;height:44px;border:var(--bw) solid var(--ink);border-radius:50%;display:grid;place-items:center;background:var(--card)}
+.node.c-red{background:var(--red-soft)} .node.c-yellow{background:var(--yellow-soft)} .node.c-blue{background:var(--blue-soft)} .node.c-green{background:var(--green)}
+.node.star{background:var(--red)}
+.ti .box{background:var(--card);border:var(--bw) solid var(--ink);border-radius:14px;padding:9px 12px}
+.ti.hl .box{background:var(--yellow-soft)}
+.ti .time{font-size:13px;color:var(--red);letter-spacing:.5px}
+.ti .name{font-size:16px;line-height:1.35}
+.ti .desc{font-size:13px;color:var(--muted);margin-top:3px}
+.ti .maps{display:flex;gap:6px;margin-top:7px;flex-wrap:wrap}
+.ti .maps a{font-size:12px;text-decoration:none;border:2px solid var(--ink);border-radius:999px;padding:1px 9px;background:var(--bg)}
+.ti .maps a:active{background:var(--yellow)}
+.ti .badge{display:inline-block;font-size:11px;background:var(--red);color:#fff;border:2px solid var(--ink);border-radius:999px;padding:0 7px;margin-left:4px;vertical-align:2px}
+
+/* prep */
+.todo-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:6px}
+.todo-head h3{font-size:18px;font-weight:400}
+.progress{font-size:13px;border:2px solid var(--ink);border-radius:999px;padding:1px 10px;background:var(--yellow)}
+.bar{height:12px;border:2px solid var(--ink);border-radius:999px;background:var(--bg);overflow:hidden;margin:4px 0 8px}
+.bar i{display:block;height:100%;background:var(--red);border-right:2px solid var(--ink);width:0;transition:width .3s}
+.todo{list-style:none}
+.todo li{border-top:2px dashed #d8cdbd}
+.todo li:first-child{border-top:none}
+.todo button{display:flex;gap:10px;align-items:flex-start;width:100%;background:none;border:none;text-align:left;padding:10px 2px;font-size:15px}
+.todo .cb{flex:none;width:24px;height:24px;border:var(--bw) solid var(--ink);border-radius:50%;display:grid;place-items:center;background:var(--card);margin-top:1px;transition:background .15s}
+.todo .cb svg{opacity:0;transform:scale(.4);transition:all .2s}
+.todo .done .cb{background:var(--red)}
+.todo .done .cb svg{opacity:1;transform:none}
+.todo .txt small{display:block;font-size:12px;color:var(--muted);margin-top:1px}
+.todo .done .main{text-decoration:line-through;text-decoration-thickness:2px;color:var(--muted)}
+.stay{display:grid;grid-template-columns:64px 1fr;gap:12px;align-items:center}
+.stay .ic{width:64px;height:64px;border:var(--bw) solid var(--ink);border-radius:16px;background:var(--blue-soft);display:grid;place-items:center}
+.stay h3{font-size:18px;font-weight:400}
+.stay p{font-size:13px;color:var(--muted)}
+.btns{display:flex;gap:8px;margin-top:12px;flex-wrap:wrap}
+.btn{flex:1;text-align:center;text-decoration:none;border:var(--bw) solid var(--ink);border-radius:999px;padding:7px 10px;font-size:14px;background:var(--yellow)}
+.btn.alt{background:var(--card)}
+.btn:active{background:var(--red);color:#fff}
+.info{display:grid;grid-template-columns:auto 1fr;gap:4px 10px;font-size:14px;margin-top:10px}
+.info dt{color:var(--muted)}
+.tips{list-style:none;font-size:14px}
+.tips li{display:flex;gap:8px;padding:6px 0;border-top:2px dashed #d8cdbd}
+.tips li:first-child{border-top:none}
+.tips .k{flex:none;border:2px solid var(--ink);border-radius:8px;padding:0 6px;font-size:12px;background:var(--blue-soft);height:fit-content;margin-top:2px}
+footer{text-align:center;font-size:12px;color:var(--muted);padding:18px 14px 0}
+</style>
+</head>
+<body>
+
+<header class="top" id="top">
+  <nav class="tabs" aria-label="分頁">
+    <button class="tab active" data-target="flights">航班</button>
+    <button class="tab" data-target="itinerary">行程</button>
+    <button class="tab" data-target="prep">準備</button>
+  </nav>
+  <div class="dates" role="tablist" aria-label="日期"></div>
+</header>
+
+<div class="hero">
+  <div class="hero-art" aria-hidden="true">
+    <svg viewBox="0 0 360 210" xmlns="http://www.w3.org/2000/svg" stroke="#1E1B18" stroke-width="3" stroke-linejoin="round" stroke-linecap="round">
+      <rect x="0" y="0" width="360" height="210" fill="#FBF3E4" stroke="none"/>
+      <!-- sun -->
+      <g>
+        <circle cx="292" cy="50" r="24" fill="#FFD866"/>
+        <path d="M292 18v-10M292 82v10M324 50h10M260 50h-10M315 27l7-7M269 27l-7-7M315 73l7 7M269 73l-7 7" fill="none"/>
+      </g>
+      <!-- clouds -->
+      <path d="M40 46c0-8 8-12 14-9 3-8 16-9 20-1 8-1 12 6 9 12H44c-3 0-4-1-4-2z" fill="#FFFDF8"/>
+      <path d="M190 30c0-6 6-9 11-7 2-6 12-7 15-1 6 0 9 4 7 9h-30c-2 0-3-0-3-1z" fill="#FFFDF8"/>
+      <!-- cable car -->
+      <path d="M0 22 L360 74" fill="none" stroke-width="2.5"/>
+      <g transform="translate(148 44) rotate(8)">
+        <path d="M14 0v10" fill="none"/>
+        <rect x="0" y="10" width="28" height="22" rx="6" fill="#E0644E"/>
+        <rect x="5" y="15" width="8" height="7" rx="2" fill="#DDEFF8" stroke-width="2"/>
+        <rect x="15" y="15" width="8" height="7" rx="2" fill="#DDEFF8" stroke-width="2"/>
+      </g>
+      <!-- city hills / coastline -->
+      <path d="M-4 130 C 30 96, 70 98, 96 118 C 116 100, 150 104, 168 124 L 168 140 L -4 140 Z" fill="#BFE3C0"/>
+      <g fill="#FFFDF8" stroke-width="2.5">
+        <rect x="18" y="104" width="16" height="30" rx="3"/>
+        <rect x="38" y="94" width="14" height="40" rx="3" fill="#F6C9BD"/>
+        <rect x="56" y="108" width="18" height="26" rx="3"/>
+        <rect x="118" y="112" width="16" height="22" rx="3" fill="#FFF0B8"/>
+      </g>
+      <!-- Busan tower -->
+      <g>
+        <path d="M88 136 L92 70 L98 70 L102 136" fill="#FFFDF8"/>
+        <ellipse cx="95" cy="68" rx="11" ry="6" fill="#A9D4EC"/>
+        <path d="M95 62v-12" fill="none"/>
+      </g>
+      <!-- sea -->
+      <path d="M-4 136 H364 V214 H-4 Z" fill="#A9D4EC"/>
+      <path d="M20 156c8-6 16-6 24 0s16 6 24 0M120 176c8-6 16-6 24 0s16 6 24 0M40 196c8-6 16-6 24 0M230 196c8-6 16-6 24 0s16 6 24 0" fill="none" stroke-width="2.5"/>
+      <!-- breakwater + twin lighthouses (Cheongsapo) -->
+      <path d="M232 150 H352 V160 H232 Z" fill="#FFFDF8"/>
+      <g>
+        <path d="M262 150 L266 104 H278 L282 150 Z" fill="#E0644E"/>
+        <path d="M265 120h16M264 134h18" fill="none" stroke="#FFFDF8" stroke-width="4"/>
+        <path d="M264 120h18M263 134h20" fill="none" stroke-width="0"/>
+        <rect x="264" y="94" width="16" height="11" rx="3" fill="#FFD866"/>
+        <path d="M262 94 L272 84 L282 94 Z" fill="#E0644E"/>
+      </g>
+      <g>
+        <path d="M312 150 L316 110 H326 L330 150 Z" fill="#FFFDF8"/>
+        <path d="M314 124h14M313 138h16" fill="none" stroke="#E0644E" stroke-width="4"/>
+        <rect x="314" y="101" width="14" height="10" rx="3" fill="#FFD866"/>
+        <path d="M312 101 L321 92 L330 101 Z" fill="#FFFDF8"/>
+      </g>
+      <!-- boat -->
+      <g transform="translate(150 150)">
+        <path d="M0 10 H56 L46 24 H10 Z" fill="#FFFDF8"/>
+        <rect x="14" y="0" width="22" height="10" rx="2" fill="#FFD866"/>
+        <path d="M40 10 V-8 L52 6" fill="none"/>
+        <circle cx="22" cy="17" r="2.5" fill="#1E1B18" stroke="none"/>
+        <circle cx="32" cy="17" r="2.5" fill="#1E1B18" stroke="none"/>
+      </g>
+      <!-- gull -->
+      <path d="M210 92c4-5 8-5 10 0 2-5 6-5 10 0" fill="none" stroke-width="2.5"/>
+      <path d="M60 70c3-4 6-4 8 0 2-4 5-4 8 0" fill="none" stroke-width="2.5"/>
+    </svg>
+  </div>
+  <h1>釜山 <span class="accent">3天2夜</span></h1>
+  <p class="sub">2026 · 11/21 (六) - 11/23 (一)</p>
+  <div class="pill" id="countdown">出發倒數 <b>–</b> 天</div>
+  <div class="chips">
+    <span class="chip">👥 10 人</span><span class="chip">🏨 南浦洞</span><span class="chip">✨ 醫美</span><span class="chip">🦀 海鮮</span>
+  </div>
+</div>
+
+<!-- ============ 航班 ============ -->
+<section id="flights">
+  <h2 class="sec-title"><span class="num">1</span>航班</h2>
+
+  <div class="card flight">
+    <div class="head"><span class="tag out">去程</span><span class="day">11/21 (六)</span></div>
+    <div class="route">
+      <div class="pt"><div class="t">12:15</div><div class="p">桃園 T1</div></div>
+      <div class="mid">2h30m
+        <div class="line"><svg width="26" height="22" viewBox="0 0 26 22"><path d="M2 12 L24 4 L18 18 L13 13 Z" fill="#E0644E" stroke="#1E1B18" stroke-width="2" stroke-linejoin="round"/></svg></div>直飛</div>
+      <div class="pt r"><div class="t">15:45</div><div class="p">釜山金海 (PUS)</div></div>
+    </div>
+    <p class="note">韓國比台灣快 1 小時，時間皆為當地時間。出關後搭大型計程車或包車到飯店，約 35–45 分。</p>
+  </div>
+
+  <div class="card flight">
+    <div class="head"><span class="tag back">回程</span><span class="day">11/23 (一)</span></div>
+    <div class="route">
+      <div class="pt"><div class="t">22:00</div><div class="p">釜山 (PUS)</div></div>
+      <div class="mid">2h50m
+        <div class="line"><svg width="26" height="22" viewBox="0 0 26 22"><path d="M2 12 L24 4 L18 18 L13 13 Z" fill="#A9D4EC" stroke="#1E1B18" stroke-width="2" stroke-linejoin="round"/></svg></div>直飛</div>
+      <div class="pt r"><div class="t">23:50</div><div class="p">桃園 T1</div></div>
+    </div>
+    <p class="note">建議 19:30 前抵達金海機場報到。18:45 從飯店出發。</p>
+  </div>
+</section>
+
+<!-- ============ 行程 ============ -->
+<section id="itinerary">
+  <h2 class="sec-title"><span class="num">2</span>行程</h2>
+  <div class="card">
+    <div class="day-head"><h3 id="dayTitle"></h3><span class="theme" id="dayTheme"></span></div>
+    <div class="timeline" id="timeline"></div>
+  </div>
+</section>
+
+<!-- ============ 準備 ============ -->
+<section id="prep">
+  <h2 class="sec-title"><span class="num">3</span>出發前準備</h2>
+
+  <div class="card">
+    <div class="todo-head"><h3>待辦清單</h3><span class="progress" id="progress">0 / 0</span></div>
+    <div class="bar"><i id="bar"></i></div>
+    <ul class="todo" id="todo"></ul>
+  </div>
+
+  <div class="card">
+    <div class="stay">
+      <div class="ic">
+        <svg width="40" height="40" viewBox="0 0 40 40" fill="none" stroke="#1E1B18" stroke-width="2.5" stroke-linejoin="round"><path d="M6 36V12L20 4l14 8v24z" fill="#FFFDF8"/><rect x="15" y="25" width="10" height="11" fill="#E0644E"/><rect x="11" y="14" width="6" height="6" fill="#FFD866"/><rect x="23" y="14" width="6" height="6" fill="#FFD866"/></svg>
+      </div>
+      <div>
+        <h3>Hotel Ground27・南浦洞</h3>
+        <p>11/21 (六) – 11/23 (一)・2 晚</p>
+      </div>
+    </div>
+    <dl class="info">
+      <dt>地址</dt><dd>91 Gwangbok-ro, Jung-gu, Busan<br>부산 중구 광복로 91</dd>
+      <dt>入住</dt><dd>16:00 起</dd>
+      <dt>退房</dt><dd>11:00 前（行李寄放請向櫃台確認）</dd>
+    </dl>
+    <div class="btns">
+      <a class="btn" target="_blank" rel="noopener" href="https://map.naver.com/p/search/%ED%98%B8%ED%85%94%EA%B7%B8%EB%9D%BC%EC%9A%B4%EB%93%9C27">Naver 地圖</a>
+      <a class="btn alt" target="_blank" rel="noopener" href="https://www.google.com/maps/search/?api=1&query=Hotel%20Ground27%2091%20Gwangbok-ro%20Busan">Google 地圖</a>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="stay">
+      <div class="ic" style="background:var(--red-soft)">
+        <svg width="40" height="40" viewBox="0 0 40 40" fill="none" stroke="#1E1B18" stroke-width="2.5" stroke-linejoin="round"><path d="M20 4l4 10 10 1-8 7 3 10-9-6-9 6 3-10-8-7 10-1z" fill="#FFD866"/></svg>
+      </div>
+      <div>
+        <h3>BANOBAGI 佰諾佰琪・西面</h3>
+        <p>11/23 (一) 上午・10 人請提早預約</p>
+      </div>
+    </div>
+    <dl class="info">
+      <dt>地址</dt><dd>부산진구 서면로 74 아이온시티빌딩 16층</dd>
+      <dt>地鐵</dt><dd>西面站 5、7 號出口步行 1 分</dd>
+      <dt>週一</dt><dd>10:00–20:00（午休 14:00–15:00）</dd>
+      <dt>週六</dt><dd>10:00–16:00・週日休診</dd>
+    </dl>
+    <div class="btns">
+      <a class="btn" target="_blank" rel="noopener" href="https://lin.ee/4jrbuvW">LINE 預約 @banobagibs_tw</a>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="todo-head"><h3>小提醒</h3></div>
+    <ul class="tips">
+      <li><span class="k">天氣</span><span>11 月下旬約 8–17°C，海邊風大：發熱衣＋毛衣或輕羽絨＋防風外套。</span></li>
+      <li><span class="k">交通</span><span>10 人約 3 台一般計程車或 2 台大型計程車；可用 Kakao T / Uber 叫車。</span></li>
+      <li><span class="k">現金</span><span>札嘎其市場 2 樓部分店家偏好現金，備些韓元。</span></li>
+      <li><span class="k">日落</span><span>約 17:15，青沙浦看夕陽排 16:30。</span></li>
+      <li><span class="k">術後</span><span>醫美後加強防曬保濕，當晚搭機記得補水。</span></li>
+    </ul>
+  </div>
+</section>
+
+<footer>釜山 3天2夜・11/21 – 11/23・資訊以官方最新公告為準</footer>
+
+<script>
+(function(){
+  /* ---------- icons ---------- */
+  const S = 'fill="none" stroke="#1E1B18" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"';
+  const I = {
+    plane:`<svg width="24" height="24" viewBox="0 0 24 24" ${S}><path d="M2 13l20-8-6 15-4-5z" fill="#fff"/><path d="M12 15l4-6"/></svg>`,
+    car:`<svg width="24" height="24" viewBox="0 0 24 24" ${S}><path d="M3 16v-4l2-5h14l2 5v4z" fill="#FFD866"/><circle cx="7.5" cy="17" r="2" fill="#fff"/><circle cx="16.5" cy="17" r="2" fill="#fff"/><path d="M6 11h12"/></svg>`,
+    hotel:`<svg width="24" height="24" viewBox="0 0 24 24" ${S}><path d="M4 21V5h16v16z" fill="#fff"/><path d="M8 9h2M14 9h2M8 13h2M14 13h2"/><path d="M10 21v-4h4v4"/></svg>`,
+    fish:`<svg width="24" height="24" viewBox="0 0 24 24" ${S}><path d="M3 12c3-5 10-6 15 0-5 6-12 5-15 0z" fill="#A9D4EC"/><path d="M18 12l4-4v8z" fill="#A9D4EC"/><circle cx="8" cy="11" r="1" fill="#1E1B18"/></svg>`,
+    walk:`<svg width="24" height="24" viewBox="0 0 24 24" ${S}><circle cx="13" cy="4.5" r="2" fill="#fff"/><path d="M11 21l2-6-3-3 1-5 4 3 3 1M10 12l-3 2M13 15l3 6"/></svg>`,
+    village:`<svg width="24" height="24" viewBox="0 0 24 24" ${S}><path d="M2 20l5-6 4 3 5-7 6 10z" fill="#BFE3C0"/><rect x="5" y="15" width="3" height="3" fill="#F6C9BD"/><rect x="13" y="13" width="3" height="3" fill="#FFD866"/></svg>`,
+    bowl:`<svg width="24" height="24" viewBox="0 0 24 24" ${S}><path d="M3 11h18c0 5-4 8-9 8s-9-3-9-8z" fill="#FFD866"/><path d="M9 7c0-2 2-2 2-4M14 7c0-2 2-2 2-4"/></svg>`,
+    beach:`<svg width="24" height="24" viewBox="0 0 24 24" ${S}><path d="M2 17c3-2 5-2 8 0s5 2 8 0 3-1 4-1" /><path d="M12 15V5" /><path d="M5 9c2-5 12-5 14 0z" fill="#E0644E"/></svg>`,
+    train:`<svg width="24" height="24" viewBox="0 0 24 24" ${S}><rect x="5" y="3" width="14" height="14" rx="4" fill="#A9D4EC"/><path d="M5 10h14"/><circle cx="9" cy="13.5" r="1" fill="#1E1B18"/><circle cx="15" cy="13.5" r="1" fill="#1E1B18"/><path d="M8 21l2-4M16 21l-2-4"/></svg>`,
+    light:`<svg width="24" height="24" viewBox="0 0 24 24" ${S}><path d="M8 21l2-13h4l2 13z" fill="#fff"/><path d="M9 14h6" stroke="#E0644E" stroke-width="3"/><path d="M9 8l3-4 3 4"/><path d="M4 6l-2-1M20 6l2-1"/></svg>`,
+    shell:`<svg width="24" height="24" viewBox="0 0 24 24" ${S}><path d="M3 17C3 10 7 5 12 5s9 5 9 12z" fill="#F6C9BD"/><path d="M12 5v12M7.5 7l2 10M16.5 7l-2 10"/><path d="M9 20h6"/></svg>`,
+    bag:`<svg width="24" height="24" viewBox="0 0 24 24" ${S}><path d="M4 8h16l-1 13H5z" fill="#FFD866"/><path d="M8 8a4 4 0 0 1 8 0"/></svg>`,
+    subway:`<svg width="24" height="24" viewBox="0 0 24 24" ${S}><rect x="6" y="3" width="12" height="15" rx="3" fill="#BFE3C0"/><path d="M6 11h12"/><path d="M8 21l2-3M16 21l-2-3"/></svg>`,
+    spark:`<svg width="24" height="24" viewBox="0 0 24 24" ${S}><path d="M12 2l2 6 6 2-6 2-2 6-2-6-6-2 6-2z" fill="#FFD866"/><path d="M19 16l1 2 2 1-2 1-1 2-1-2-2-1 2-1z" fill="#fff"/></svg>`,
+    lug:`<svg width="24" height="24" viewBox="0 0 24 24" ${S}><rect x="6" y="6" width="12" height="14" rx="2" fill="#A9D4EC"/><path d="M10 6V3h4v3M10 10v6M14 10v6"/></svg>`,
+    moon:`<svg width="24" height="24" viewBox="0 0 24 24" ${S}><path d="M19 15A8 8 0 1 1 10 4a6 6 0 0 0 9 11z" fill="#FFD866"/></svg>`
+  };
+  const robot = `<svg class="bot" width="30" height="24" viewBox="0 0 30 24" fill="none" stroke="#1E1B18" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"><path d="M15 1v4"/><circle cx="15" cy="2" r="1.6" fill="#FFD866"/><rect x="4" y="5" width="22" height="16" rx="6" fill="#E0644E"/><rect x="1" y="10" width="3" height="6" rx="1.5" fill="#E0644E"/><rect x="26" y="10" width="3" height="6" rx="1.5" fill="#E0644E"/><circle cx="11" cy="12.5" r="2.2" fill="#fff"/><circle cx="19" cy="12.5" r="2.2" fill="#fff"/><circle cx="11.5" cy="12.8" r="1" fill="#1E1B18" stroke="none"/><circle cx="19.5" cy="12.8" r="1" fill="#1E1B18" stroke="none"/><path d="M12 17.5q3 2 6 0"/></svg>`;
+
+  const G = q => 'https://www.google.com/maps/search/?api=1&query=' + encodeURIComponent(q);
+  const N = q => 'https://map.naver.com/p/search/' + encodeURIComponent(q);
+
+  /* ---------- itinerary data ---------- */
+  const DAYS = [
+    { key:'d1', d:'11/21', w:'六', title:'Day 1・抵達＋札嘎其海鮮', theme:'南浦洞', items:[
+      {t:'15:45', i:'plane', c:'blue', n:'抵達金海機場', s:'入境、領行李，預估 16:30–16:45 出關'},
+      {t:'16:45', i:'car', c:'yellow', n:'機場 → 飯店', s:'計程車約 35–45 分、每台約 ₩18,000–22,000；10 人搭 3 台或 2 台大型計程車／包車'},
+      {t:'17:30', i:'hotel', c:'blue', n:'Hotel Ground27 入住', s:'入住 16:00 起，放好行李', g:'Hotel Ground27 Busan', k:'호텔그라운드27'},
+      {t:'18:30', i:'fish', c:'red', n:'札嘎其市場 海鮮晚餐', s:'1 樓買海鮮、2 樓代客料理；入席費每人約 ₩5,000，10 人分 2 桌', hl:true, star:'必吃', g:'Jagalchi Market Busan', k:'자갈치시장'},
+      {t:'20:30', i:'walk', c:'green', n:'BIFF 廣場・光復路散步', s:'吃小吃、逛街，第一天早點休息', g:'BIFF Square Busan', k:'BIFF광장'}
+    ]},
+    { key:'d2', d:'11/22', w:'日', title:'Day 2・甘川＋海雲台＋青沙浦', theme:'海景日', items:[
+      {t:'09:30', i:'car', c:'yellow', n:'飯店 → 甘川文化村', s:'計程車 3 台，約 15–20 分'},
+      {t:'09:45', i:'village', c:'green', n:'甘川文化村', s:'散步拍照，山坡多請穿好走的鞋', g:'Gamcheon Culture Village', k:'감천문화마을'},
+      {t:'12:00', i:'bowl', c:'yellow', n:'午餐・南浦洞或甘川附近', s:'豬肉湯飯、小麥麵等釜山平價美食'},
+      {t:'13:00', i:'car', c:'yellow', n:'→ 海雲台 尾浦', s:'計程車約 40–50 分'},
+      {t:'14:00', i:'beach', c:'blue', n:'海雲台海水浴場', s:'海邊風大，帶防風外套', g:'Haeundae Beach', k:'해운대해수욕장'},
+      {t:'15:00', i:'train', c:'blue', n:'藍線公園 尾浦 → 青沙浦', s:'海岸列車或天空膠囊（每車 2–4 人，10 人需 3 車）；沒訂到可沿步道走', g:'Haeundae Blueline Park Mipo Station', k:'해운대블루라인파크 미포정거장'},
+      {t:'16:00', i:'light', c:'red', n:'青沙浦 紅白雙燈塔', s:'平交道、踏石展望台；日落約 17:15', g:'Cheongsapo Twin Lighthouse', k:'청사포 쌍둥이등대'},
+      {t:'16:30', i:'shell', c:'red', n:'青沙浦 烤貝晚餐', s:'看夕陽吃炭火烤貝；10 人請先聯絡店家', hl:true, star:'必吃', g:'Cheongsapo grilled clams', k:'청사포 조개구이'},
+      {t:'18:45', i:'moon', c:'yellow', n:'回南浦洞飯店', s:'計程車約 45–60 分；想看夜景可改去廣安里'}
+    ]},
+    { key:'d3', d:'11/23', w:'一', title:'Day 3・西面醫美＋回程', theme:'西面', items:[
+      {t:'08:30', i:'lug', c:'blue', n:'早餐・退房・寄放行李', s:'退房 11:00 前；寄放方式請向櫃台確認'},
+      {t:'09:15', i:'subway', c:'green', n:'南浦 → 西面', s:'地鐵 1 號線約 20 分，刷 T-money'},
+      {t:'10:00', i:'spark', c:'red', n:'BANOBAGI 佰諾佰琪 醫美', s:'西面站 5、7 號出口步行 1 分；14:00–15:00 午休，10 人分批進行', hl:true, star:'預約', g:'Banobagi Clinic Busan Seomyeon', k:'바노바기의원 부산'},
+      {t:'10:00', i:'bag', c:'yellow', n:'不做醫美的人：西面逛街', s:'西面地下街、樂天百貨、田浦咖啡街', g:'Jeonpo Cafe Street', k:'전포카페거리'},
+      {t:'14:00', i:'bowl', c:'yellow', n:'西面午餐', s:'西面豬肉湯飯一條街', g:'Seomyeon pork soup street', k:'서면 돼지국밥골목'},
+      {t:'15:30', i:'subway', c:'green', n:'西面 → 南浦', s:'地鐵 1 號線約 20 分'},
+      {t:'16:00', i:'bag', c:'yellow', n:'國際市場・光復路 伴手禮', s:'輕鬆逛，不排戶外大景點', g:'Gukje Market Busan', k:'국제시장'},
+      {t:'17:30', i:'bowl', c:'yellow', n:'南浦洞晚餐', s:'吃簡單一點，留時間給機場'},
+      {t:'18:30', i:'lug', c:'blue', n:'回飯店拿行李', s:'18:45 搭大型計程車／包車出發'},
+      {t:'19:30', i:'plane', c:'blue', n:'抵達金海機場報到', s:'22:00 起飛 → 23:50 桃園 T1', hl:true}
+    ]}
+  ];
+
+  const datesEl = document.querySelector('.dates');
+  const tl = document.getElementById('timeline');
+  let current = 0;
+
+  DAYS.forEach((d, idx) => {
+    const b = document.createElement('button');
+    b.className = 'date' + (idx === 0 ? ' active' : '');
+    b.setAttribute('role','tab');
+    b.innerHTML = robot + `<span class="d">${d.d}</span><span class="w">(${d.w})</span>`;
+    b.addEventListener('click', () => { selectDay(idx); scrollToId('itinerary'); });
+    datesEl.appendChild(b);
+  });
+
+  function selectDay(idx){
+    current = idx;
+    [...datesEl.children].forEach((b,i)=>b.classList.toggle('active', i===idx));
+    const d = DAYS[idx];
+    document.getElementById('dayTitle').textContent = d.title;
+    document.getElementById('dayTheme').textContent = d.theme;
+    tl.innerHTML = d.items.map((it, n) => `
+      <div class="ti${it.hl?' hl':''}" style="animation-delay:${n*40}ms">
+        <div class="node c-${it.c}">${I[it.i]||''}</div>
+        <div class="box">
+          <div class="time">${it.t}</div>
+          <div class="name">${it.n}${it.star?`<span class="badge">${it.star}</span>`:''}</div>
+          <div class="desc">${it.s}</div>
+          ${it.g?`<div class="maps"><a target="_blank" rel="noopener" href="${N(it.k)}">Naver 地圖</a><a target="_blank" rel="noopener" href="${G(it.g)}">Google 地圖</a></div>`:''}
+        </div>
+      </div>`).join('');
+    try{ localStorage.setItem('busan-day', String(idx)); }catch(e){}
+  }
+
+  /* default day: trip day if during trip, else saved / first */
+  const todayTPE = new Intl.DateTimeFormat('en-CA',{timeZone:'Asia/Taipei',year:'numeric',month:'2-digit',day:'2-digit'}).format(new Date());
+  const tripIdx = ['2026-11-21','2026-11-22','2026-11-23'].indexOf(todayTPE);
+  let saved = 0; try{ saved = parseInt(localStorage.getItem('busan-day')||'0',10)||0; }catch(e){}
+  selectDay(tripIdx >= 0 ? tripIdx : Math.min(Math.max(saved,0),2));
+
+  /* ---------- countdown (Asia/Taipei date) ---------- */
+  (function(){
+    const [y,m,d] = todayTPE.split('-').map(Number);
+    const diff = Math.round((Date.UTC(2026,10,21) - Date.UTC(y,m-1,d)) / 86400000);
+    const el = document.getElementById('countdown');
+    if (diff > 0) el.innerHTML = `出發倒數 <b>${diff}</b> 天`;
+    else if (diff === 0) el.innerHTML = `今天出發！<b>✈</b>`;
+    else if (diff >= -2) el.innerHTML = `旅程第 <b>${1-diff}</b> 天`;
+    else el.innerHTML = `旅程結束，下次見 <b>♥</b>`;
+  })();
+
+  /* ---------- todo list ---------- */
+  const TODO = [
+    {id:'banobagi', m:'LINE 預約 BANOBAGI 10 人', s:'@banobagibs_tw・11/23 上午分批時段'},
+    {id:'clinic-q', m:'問診所：行李寄放、翻譯、退稅', s:'醫美退稅各來源說法不一，以診所為準'},
+    {id:'keta', m:'確認 K-ETA 免申請', s:'台灣護照至 2026/12/31 免申請 K-ETA，可免簽停留 90 天'},
+    {id:'earrival', m:'填寫韓國電子入境申報 e-Arrival', s:'抵達前 3 天內（11/19 起，韓國時間）於 e-arrivalcard.go.kr 免費填寫'},
+    {id:'tmoney', m:'買 T-money 交通卡', s:'每人一張，地鐵轉乘有優惠'},
+    {id:'transfer', m:'訂機場接送包車或叫車', s:'11/21 16:45 機場 → 飯店、11/23 18:45 飯店 → 機場'},
+    {id:'blueline', m:'天空膠囊列車／海岸列車票', s:'11/22 15:00 前後 尾浦出發；官網每週二 07:00 開賣'},
+    {id:'hotel-bag', m:'問飯店寄放行李', s:'11/23 退房後寄放到 18:30'},
+    {id:'checkin', m:'網路報到', s:'依航空公司開放時間辦理'},
+    {id:'shellfish', m:'聯絡青沙浦烤貝店 10 人座位', s:'11/22 16:30'}
+  ];
+  const KEY = 'busan-todo-v1';
+  let state = {}; try{ state = JSON.parse(localStorage.getItem(KEY)||'{}'); }catch(e){}
+  const ul = document.getElementById('todo');
+  const check = `<svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="#fff" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M2.5 7.5l3 3 6-7"/></svg>`;
+  function renderTodo(){
+    ul.innerHTML = TODO.map(t => `<li><button class="${state[t.id]?'done':''}" data-id="${t.id}" aria-pressed="${!!state[t.id]}"><span class="cb">${check}</span><span class="txt"><span class="main">${t.m}</span><small>${t.s}</small></span></button></li>`).join('');
+    const done = TODO.filter(t=>state[t.id]).length;
+    document.getElementById('progress').textContent = `${done} / ${TODO.length}`;
+    document.getElementById('bar').style.width = (done/TODO.length*100) + '%';
+  }
+  ul.addEventListener('click', e => {
+    const b = e.target.closest('button[data-id]'); if(!b) return;
+    state[b.dataset.id] = !state[b.dataset.id];
+    try{ localStorage.setItem(KEY, JSON.stringify(state)); }catch(err){}
+    renderTodo();
+  });
+  renderTodo();
+
+  /* ---------- tabs: scroll + active state ---------- */
+  const tabs = [...document.querySelectorAll('.tab')];
+  function headerH(){ return document.querySelector('header.top').offsetHeight; }
+  function scrollToId(id, instant){
+    const el = document.getElementById(id);
+    const y = el.getBoundingClientRect().top + window.scrollY - headerH() - 6;
+    window.scrollTo({top: Math.max(0,y), behavior: instant ? 'instant' : 'smooth'});
+  }
+  tabs.forEach(t => t.addEventListener('click', () => scrollToId(t.dataset.target)));
+  const secs = ['flights','itinerary','prep'].map(id=>document.getElementById(id));
+  function onScroll(){
+    const line = headerH() + 40;
+    let active = 0;
+    secs.forEach((s,i)=>{ if (s.getBoundingClientRect().top <= line) active = i; });
+    if (window.innerHeight + window.scrollY >= document.body.scrollHeight - 4) active = secs.length-1;
+    tabs.forEach((t,i)=>t.classList.toggle('active', i===active));
+  }
+  window.addEventListener('scroll', onScroll, {passive:true});
+  window.addEventListener('resize', onScroll);
+  document.querySelectorAll('section').forEach(s=>s.style.scrollMarginTop = (headerH()+6)+'px');
+  if (location.hash) { const id = location.hash.slice(1); if (document.getElementById(id)) setTimeout(()=>{ scrollToId(id, true); onScroll(); }, 50); }
+  onScroll();
+})();
+</script>
+</body>
+</html>
