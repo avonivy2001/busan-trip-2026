@@ -135,6 +135,31 @@ section{padding:22px 14px 4px;scroll-margin-top:128px}
 .tips li{display:flex;gap:8px;padding:6px 0;border-top:2px dashed #d8cdbd}
 .tips li:first-child{border-top:none}
 .tips .k{flex:none;border:2px solid var(--ink);border-radius:8px;padding:0 6px;font-size:12px;background:var(--blue-soft);height:fit-content;margin-top:2px}
+/* weather */
+.sec-title .num.wx{background:var(--yellow);color:var(--ink);font-size:16px}
+.wx-loading{font-size:14px;color:var(--muted);padding:4px 0}
+.wx-now{display:flex;align-items:center;gap:12px;margin-bottom:12px;padding-bottom:12px;border-bottom:2px dashed #d8cdbd}
+.wx-now .wx-emoji{flex:none;width:56px;height:56px;border:var(--bw) solid var(--ink);border-radius:16px;background:var(--blue-soft);display:grid;place-items:center;font-size:30px;line-height:1}
+.wx-now .wx-temp{font-size:36px;line-height:1;letter-spacing:1px}
+.wx-now .wx-temp span{font-size:18px}
+.wx-now .wx-meta{font-size:14px;color:var(--muted);margin-top:2px}
+.wx-now .wx-meta b{color:var(--ink);font-weight:400}
+.wx-loc{font-size:12px;color:var(--muted);margin-top:2px}
+.wx-days{display:flex;gap:8px;overflow-x:auto;-webkit-overflow-scrolling:touch;padding:2px 0 8px;scroll-snap-type:x proximity;scrollbar-width:thin}
+.wx-day{flex:none;width:86px;border:var(--bw) solid var(--ink);border-radius:14px;padding:8px 5px 9px;text-align:center;background:var(--card);scroll-snap-align:start}
+.wx-day.trip{background:var(--yellow)}
+.wx-day .wx-tag{display:inline-block;font-size:11px;border:2px solid var(--ink);border-radius:999px;padding:0 6px;background:var(--red);color:#fff;margin-bottom:3px}
+.wx-day .md{display:block;font-size:15px;line-height:1.2}
+.wx-day .wd{display:block;font-size:11px;color:var(--muted)}
+.wx-day.trip .wd{color:var(--ink)}
+.wx-day .em{display:block;font-size:22px;line-height:1.25;margin:3px 0 1px}
+.wx-day .cond{font-size:11px;color:var(--muted);min-height:1.35em;line-height:1.3}
+.wx-day .hi{font-size:16px;line-height:1.2}
+.wx-day .lo{font-size:12px;color:var(--muted)}
+.wx-day .pop{font-size:11px;color:var(--muted);margin-top:2px}
+.wx-day.pending .pending-note{font-size:12px;line-height:1.35;margin-top:4px;color:var(--ink)}
+.wx-foot{font-size:12px;color:var(--muted);margin-top:8px;padding-top:8px;border-top:2px dashed #d8cdbd}
+.wx-fallback{font-size:14px;line-height:1.5}
 footer{text-align:center;font-size:12px;color:var(--muted);padding:18px 14px 0}
 </style>
 </head>
@@ -221,6 +246,14 @@ footer{text-align:center;font-size:12px;color:var(--muted);padding:18px 14px 0}
     <span class="chip">👥 10 人</span><span class="chip">🏨 南浦洞</span><span class="chip">✨ 醫美</span><span class="chip">🦀 海鮮</span>
   </div>
 </div>
+
+<!-- ============ 天氣 ============ -->
+<section id="weather" aria-label="釜山天氣">
+  <h2 class="sec-title"><span class="num wx" aria-hidden="true">🌤</span>釜山天氣</h2>
+  <div class="card" id="weatherCard">
+    <p class="wx-loading">天氣載入中…</p>
+  </div>
+</section>
 
 <!-- ============ 航班 ============ -->
 <section id="flights">
@@ -313,7 +346,7 @@ footer{text-align:center;font-size:12px;color:var(--muted);padding:18px 14px 0}
   <div class="card">
     <div class="todo-head"><h3>小提醒</h3></div>
     <ul class="tips">
-      <li><span class="k">天氣</span><span>11 月下旬約 8–17°C，海邊風大：發熱衣＋毛衣或輕羽絨＋防風外套。</span></li>
+      <li><span class="k">天氣</span><span>11 月下旬白天約 8–17°C，早晚可能低到約 2°C。海邊風大：請帶輕羽絨或厚外套，再加手套和圍巾。</span></li>
       <li><span class="k">交通</span><span>10 人約 3 台一般計程車或 2 台大型計程車；可用 Kakao T / Uber 叫車。</span></li>
       <li><span class="k">現金</span><span>札嘎其市場 2 樓部分店家偏好現金，備些韓元。</span></li>
       <li><span class="k">日落</span><span>約 17:15，青沙浦看夕陽排 16:30。</span></li>
@@ -526,6 +559,154 @@ footer{text-align:center;font-size:12px;color:var(--muted);padding:18px 14px 0}
   window.addEventListener('resize', onScroll);
   document.querySelectorAll('section').forEach(s=>s.style.scrollMarginTop = (headerH()+6)+'px');
   if (location.hash) { const id = location.hash.slice(1); if (document.getElementById(id)) setTimeout(()=>{ scrollToId(id, true); onScroll(); }, 50); }
+
+  /* ---------- live weather (Open-Meteo, Nampo-dong) ---------- */
+  const WX_URL = 'https://api.open-meteo.com/v1/forecast?latitude=35.0979&longitude=129.0364&daily=weather_code,temperature_2m_max,temperature_2m_min,precipitation_probability_max&current=temperature_2m,weather_code&timezone=Asia%2FSeoul&forecast_days=16';
+  const WX_TRIP = [
+    {iso:'2026-11-21', label:'Day 1'},
+    {iso:'2026-11-22', label:'Day 2'},
+    {iso:'2026-11-23', label:'Day 3'}
+  ];
+  const WX_CLIMATE = '11 月下旬白天約 8–17°C，早晚可能低到約 2°C。海邊風大，請帶輕羽絨或厚外套，再加手套和圍巾。';
+  const WX_WD = ['日','一','二','三','四','五','六'];
+
+  function wxInfo(code){
+    const c = Number(code);
+    if (c === 0) return {e:'☀️', l:'晴'};
+    if (c === 1) return {e:'🌤', l:'大致晴朗'};
+    if (c === 2) return {e:'⛅', l:'多雲時晴'};
+    if (c === 3) return {e:'☁️', l:'陰'};
+    if (c === 45 || c === 48) return {e:'🌫', l:'霧'};
+    if (c >= 51 && c <= 57) return {e:'🌦', l:'毛毛雨'};
+    if (c === 61 || c === 80) return {e:'🌧', l:'小雨'};
+    if (c === 63 || c === 81) return {e:'🌧', l:'中雨'};
+    if (c === 65 || c === 82) return {e:'🌧️', l:'大雨'};
+    if (c === 66 || c === 67) return {e:'🌧️', l:'凍雨'};
+    if (c === 71 || c === 85) return {e:'🌨️', l:'小雪'};
+    if (c === 73) return {e:'🌨️', l:'中雪'};
+    if (c === 75 || c === 77 || c === 86) return {e:'❄️', l:'大雪'};
+    if (c >= 95 && c <= 99) return {e:'⛈️', l:'雷雨'};
+    return {e:'🌡️', l:'—' };
+  }
+  function wxMd(iso){
+    const p = iso.split('-');
+    return String(Number(p[1])) + '/' + String(Number(p[2]));
+  }
+  function wxWeekday(iso){
+    const [y,m,d] = iso.split('-').map(Number);
+    return WX_WD[new Date(Date.UTC(y, m-1, d)).getUTCDay()];
+  }
+  function wxAddDays(iso, n){
+    const [y,m,d] = iso.split('-').map(Number);
+    return new Date(Date.UTC(y, m-1, d + n)).toISOString().slice(0,10);
+  }
+  function wxDaysBetween(a, b){
+    const [y1,m1,d1] = a.split('-').map(Number);
+    const [y2,m2,d2] = b.split('-').map(Number);
+    return Math.round((Date.UTC(y2,m2-1,d2) - Date.UTC(y1,m1-1,d1)) / 86400000);
+  }
+  function wxRound(n){ return String(Math.round(Number(n))); }
+  function wxUpdated(isoSeoul){
+    const d = new Date(isoSeoul + ':00+09:00');
+    if (isNaN(d)) return '';
+    const parts = new Intl.DateTimeFormat('en-US', {
+      timeZone:'Asia/Taipei', month:'numeric', day:'numeric',
+      hour:'2-digit', minute:'2-digit', hour12:false
+    }).formatToParts(d);
+    const g = t => (parts.find(p=>p.type===t)||{}).value || '';
+    return g('month') + '/' + g('day') + ' ' + g('hour') + ':' + g('minute') + '（台北時間）';
+  }
+  function wxFallback(msg){
+    const el = document.getElementById('weatherCard');
+    if (!el) return;
+    el.innerHTML = `<p class="wx-fallback">${msg}</p><p class="wx-foot">${WX_CLIMATE}</p>`;
+  }
+  function renderWeather(data){
+    const el = document.getElementById('weatherCard');
+    if (!el) return;
+    const daily = data && data.daily;
+    const cur = data && data.current;
+    if (!daily || !Array.isArray(daily.time) || !daily.time.length) throw new Error('no daily');
+    const byDate = {};
+    daily.time.forEach((iso, i) => {
+      if (!/^\d{4}-\d{2}-\d{2}$/.test(iso)) return;
+      byDate[iso] = {
+        code: daily.weather_code[i],
+        max: daily.temperature_2m_max[i],
+        min: daily.temperature_2m_min[i],
+        pop: daily.precipitation_probability_max[i]
+      };
+    });
+    const tripMap = Object.fromEntries(WX_TRIP.map(t => [t.iso, t.label]));
+    const firstTrip = WX_TRIP[0].iso;
+    const lastTrip = WX_TRIP[WX_TRIP.length-1].iso;
+    const start = daily.time[0];
+    let dates = [];
+    if (start <= lastTrip && wxDaysBetween(start, lastTrip) <= 16){
+      for (let d = start; d <= lastTrip; d = wxAddDays(d, 1)) dates.push(d);
+    } else {
+      dates = WX_TRIP.map(t => t.iso);
+    }
+    WX_TRIP.forEach(t => { if (!dates.includes(t.iso)) dates.push(t.iso); });
+
+    let nowHtml = '';
+    if (cur && Number.isFinite(Number(cur.temperature_2m))){
+      const info = wxInfo(cur.weather_code);
+      nowHtml = `<div class="wx-now">
+        <div class="wx-emoji" aria-hidden="true">${info.e}</div>
+        <div>
+          <div class="wx-temp">${wxRound(cur.temperature_2m)}<span>°C</span></div>
+          <div class="wx-meta">現在　<b>${info.l}</b></div>
+          <div class="wx-loc">南浦洞・釜山</div>
+        </div>
+      </div>`;
+    }
+
+    const daysHtml = dates.map(iso => {
+      const isTrip = !!tripMap[iso];
+      const row = byDate[iso];
+      const md = wxMd(iso);
+      const wd = wxWeekday(iso);
+      const tag = isTrip ? `<span class="wx-tag">${tripMap[iso]}</span>` : '';
+      if (!row){
+        return `<div class="wx-day pending${isTrip?' trip':''}" data-date="${iso}">
+          ${tag}<span class="md">${md}</span><span class="wd">週${wd}</span>
+          <div class="pending-note">預報尚未開放</div>
+        </div>`;
+      }
+      const info = wxInfo(row.code);
+      return `<div class="wx-day${isTrip?' trip':''}" data-date="${iso}">
+        ${tag}<span class="md">${md}</span><span class="wd">週${wd}</span>
+        <span class="em" aria-hidden="true">${info.e}</span>
+        <div class="cond">${info.l}</div>
+        <div class="hi">${wxRound(row.max)}°</div>
+        <div class="lo">${wxRound(row.min)}°</div>
+        <div class="pop">降雨 ${wxRound(row.pop)}%</div>
+      </div>`;
+    }).join('');
+
+    const updated = cur && cur.time ? wxUpdated(cur.time) : '';
+    const foot = `<p class="wx-foot">${updated ? '更新時間 ' + updated + '　' : ''}預報來源 Open-Meteo</p>`;
+    el.innerHTML = nowHtml + `<div class="wx-days" id="wxDays">${daysHtml}</div>` + foot;
+
+    const scroller = document.getElementById('wxDays');
+    const tripEl = el.querySelector('.wx-day.trip');
+    if (scroller && tripEl){
+      requestAnimationFrame(() => {
+        const left = tripEl.offsetLeft - (scroller.clientWidth - tripEl.offsetWidth) / 2;
+        scroller.scrollTo({left: Math.max(0,left), behavior:'smooth'});
+      });
+    }
+  }
+  (function loadWeather(){
+    const ctrl = typeof AbortController !== 'undefined' ? new AbortController() : null;
+    const timer = setTimeout(() => { if (ctrl) ctrl.abort(); }, 8000);
+    fetch(WX_URL, ctrl ? {signal: ctrl.signal} : undefined)
+      .then(res => { if (!res.ok) throw new Error('http '+res.status); return res.json(); })
+      .then(data => { clearTimeout(timer); renderWeather(data); })
+      .catch(() => { clearTimeout(timer); wxFallback('目前無法取得即時預報，先參考往年氣候。'); });
+  })();
+
   onScroll();
 })();
 </script>
