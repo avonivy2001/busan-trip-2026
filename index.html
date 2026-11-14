@@ -642,8 +642,17 @@ footer{text-align:center;font-size:12px;color:var(--muted);padding:18px 14px 0}
     return Math.round((Date.UTC(y2,m2-1,d2) - Date.UTC(y1,m1-1,d1)) / 86400000);
   }
   function wxRound(n){ return String(Math.round(Number(n))); }
-  function wxUpdated(isoSeoul){
-    const d = new Date(isoSeoul + ':00+09:00');
+  function wxUpdated(iso){
+    if (!iso) return '';
+    const s = String(iso).trim();
+    let d;
+    if (/Z$/i.test(s) || /[+-]\d{2}:\d{2}$/.test(s)) {
+      d = new Date(s);
+    } else if (/^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}/.test(s)) {
+      d = new Date(s + (s.length <= 16 ? ':00' : '') + '+09:00');
+    } else {
+      d = new Date(s);
+    }
     if (isNaN(d)) return '';
     const parts = new Intl.DateTimeFormat('en-US', {
       timeZone:'Asia/Taipei', month:'numeric', day:'numeric',
@@ -651,6 +660,10 @@ footer{text-align:center;font-size:12px;color:var(--muted);padding:18px 14px 0}
     }).formatToParts(d);
     const g = t => (parts.find(p=>p.type===t)||{}).value || '';
     return g('month') + '/' + g('day') + ' ' + g('hour') + ':' + g('minute') + '（台北時間）';
+  }
+  function wxDataTime(data){
+    const t = (data && (data.fetched_at || data.time || (data.current && data.current.time))) || '';
+    return t ? wxUpdated(t) : '';
   }
   function wxFallback(msg){
     const el = document.getElementById('weatherCard');
@@ -721,7 +734,7 @@ footer{text-align:center;font-size:12px;color:var(--muted);padding:18px 14px 0}
       </div>`;
     }).join('');
 
-    const updated = cur && cur.time ? wxUpdated(cur.time) : '';
+    const updated = wxDataTime(data);
     const foot = `<p class="wx-foot">${updated ? '更新時間 ' + updated + '　' : ''}預報來源 Open-Meteo</p>`;
     el.innerHTML = nowHtml + `<div class="wx-days" id="wxDays">${daysHtml}</div>` + foot;
 
@@ -734,13 +747,28 @@ footer{text-align:center;font-size:12px;color:var(--muted);padding:18px 14px 0}
       });
     }
   }
-  (function loadWeather(){
+  function wxFetchJson(url, timeoutMs){
     const ctrl = typeof AbortController !== 'undefined' ? new AbortController() : null;
-    const timer = setTimeout(() => { if (ctrl) ctrl.abort(); }, 8000);
-    fetch(WX_URL, ctrl ? {signal: ctrl.signal} : undefined)
+    const timer = setTimeout(() => { if (ctrl) ctrl.abort(); }, timeoutMs);
+    return fetch(url, ctrl ? {signal: ctrl.signal, cache:'no-store'} : {cache:'no-store'})
       .then(res => { if (!res.ok) throw new Error('http '+res.status); return res.json(); })
-      .then(data => { clearTimeout(timer); renderWeather(data); })
-      .catch(() => { clearTimeout(timer); wxFallback('目前無法取得即時預報，先參考往年氣候。'); });
+      .finally(() => clearTimeout(timer));
+  }
+  (async function loadWeather(){
+    let shown = false;
+    try {
+      const cached = await wxFetchJson('./weather.json?t=' + Date.now(), 8000);
+      renderWeather(cached);
+      shown = true;
+    } catch (err) {
+      /* fall through to live Open-Meteo */
+    }
+    try {
+      const live = await wxFetchJson(WX_URL, 6000);
+      renderWeather(live);
+    } catch (err) {
+      if (!shown) wxFallback('目前無法取得即時預報，先參考往年氣候。');
+    }
   })();
 
   onScroll();
