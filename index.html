@@ -163,6 +163,64 @@ section{padding:22px 14px 4px;scroll-margin-top:128px}
 /* exchange */
 .sec-title .num.fx{background:var(--green);color:var(--ink);font-size:16px}
 .note a{color:var(--ink);text-decoration:underline;text-underline-offset:2px}
+/* expense */
+.sec-title .num.ex{background:var(--yellow);color:var(--ink);font-size:16px}
+.tabs{gap:6px}
+.tab{font-size:14px;letter-spacing:.5px}
+.ex-note{font-size:12px;color:var(--muted);margin:-2px 0 12px;line-height:1.55}
+.ex-label{font-size:13px;color:var(--muted);margin:10px 0 4px}
+.ex-row{display:flex;gap:6px;align-items:center;flex-wrap:wrap}
+.ex-field{width:100%;border:var(--bw) solid var(--ink);border-radius:12px;padding:8px 10px;font-family:inherit;font-size:15px;background:var(--bg);color:var(--ink)}
+.ex-field.grow{flex:1;min-width:0;width:auto}
+select.ex-field{appearance:auto}
+.ex-field:focus{outline:none;background:var(--yellow-soft)}
+.ex-btn{border:var(--bw) solid var(--ink);border-radius:999px;padding:6px 12px;font-size:13px;background:var(--yellow);line-height:1.3;white-space:nowrap}
+.ex-btn.alt{background:var(--card)}
+.ex-btn.danger{background:var(--red-soft)}
+.ex-btn:active{background:var(--red);color:#fff}
+.ex-btn.primary{background:var(--red);color:#fff;width:100%;margin-top:10px;padding:9px;font-size:16px;border-radius:999px}
+.ex-btn.ghost{background:var(--bg)}
+.ex-pills{display:flex;flex-wrap:wrap;gap:6px}
+.ex-pill{border:2px solid var(--ink);border-radius:999px;padding:3px 10px;font-size:13px;background:var(--card)}
+.ex-pill.on{background:var(--yellow)}
+.ex-muted{font-size:12px;color:var(--muted)}
+.ex-conv{font-size:13px;color:var(--muted);margin-top:6px}
+.ex-setup{border:var(--bw) solid var(--ink);border-radius:var(--r);padding:10px 12px;background:var(--card);margin-bottom:12px}
+.ex-setup>summary{cursor:pointer;list-style:none;font-size:16px;display:flex;justify-content:space-between;align-items:center;gap:8px}
+.ex-setup>summary::-webkit-details-marker{display:none}
+.ex-setup>summary:after{content:'＋';font-size:18px;flex:none}
+.ex-setup[open]>summary:after{content:'－'}
+.ex-hh{display:flex;gap:6px;align-items:center;margin-top:8px}
+.ex-hh .htag{flex:none;min-width:28px;text-align:center;background:var(--blue-soft);border:2px solid var(--ink);border-radius:8px;padding:2px 6px;font-size:12px}
+.ex-mem{display:grid;grid-template-columns:1fr minmax(92px,auto) 32px;gap:6px;align-items:center;margin-top:6px}
+.ex-splitg{margin-top:6px}
+.ex-splitg .hn{font-size:12px;color:var(--muted);margin:6px 0 4px}
+.ex-split{display:flex;flex-wrap:wrap;gap:6px}
+.ex-ck{display:inline-flex;align-items:center;gap:4px;border:2px solid var(--ink);border-radius:999px;padding:3px 9px;font-size:13px;background:var(--card)}
+.ex-ck.on{background:var(--green)}
+.ex-item{border-top:2px dashed #d8cdbd;padding:10px 0}
+.ex-item:first-child{border-top:none}
+.ex-item .ttl{font-size:16px}
+.ex-item .cat{font-size:14px;margin-right:2px}
+.ex-item .meta{font-size:12px;color:var(--muted);margin-top:2px;line-height:1.45}
+.ex-item .amt{font-size:15px;margin-top:3px}
+.ex-item .acts{display:flex;gap:6px;margin-top:7px}
+.ex-sum table{width:100%;border-collapse:collapse;font-size:13px;margin-top:6px}
+.ex-sum th,.ex-sum td{text-align:right;padding:6px 3px;border-bottom:2px dashed #d8cdbd;vertical-align:top}
+.ex-sum th:first-child,.ex-sum td:first-child{text-align:left;padding-left:0}
+.ex-sum th{font-weight:400;color:var(--muted);font-size:11px}
+.ex-sum .hhrow td{background:var(--yellow-soft)}
+.ex-pos{color:#2a7a3a}
+.ex-neg{color:var(--red)}
+.ex-tot{background:var(--yellow-soft);border:var(--bw) solid var(--ink);border-radius:14px;padding:10px 12px;margin:6px 0 12px;text-align:center}
+.ex-tot .big{font-size:20px;letter-spacing:.5px}
+.ex-settle{list-style:none;margin:4px 0 12px}
+.ex-settle li{padding:8px 0;border-top:2px dashed #d8cdbd;font-size:14px;line-height:1.45}
+.ex-settle li:first-child{border-top:none}
+.ex-empty{font-size:14px;color:var(--muted);padding:8px 0}
+.ex-import{margin-top:8px}
+.ex-import textarea{width:100%;min-height:96px;border:var(--bw) solid var(--ink);border-radius:12px;padding:8px;font-family:inherit;font-size:13px;background:var(--bg);color:var(--ink)}
+.ex-sub{font-size:16px;font-weight:400;margin:14px 0 4px}
 footer{text-align:center;font-size:12px;color:var(--muted);padding:18px 14px 0}
 </style>
 </head>
@@ -173,6 +231,7 @@ footer{text-align:center;font-size:12px;color:var(--muted);padding:18px 14px 0}
     <button class="tab active" data-target="flights">航班</button>
     <button class="tab" data-target="itinerary">行程</button>
     <button class="tab" data-target="prep">準備</button>
+    <button class="tab" data-target="expense">記帳</button>
   </nav>
   <div class="dates" role="tablist" aria-label="日期"></div>
 </header>
@@ -393,6 +452,90 @@ footer{text-align:center;font-size:12px;color:var(--muted);padding:18px 14px 0}
   </div>
 </section>
 
+<section id="expense" aria-label="記帳">
+  <h2 class="sec-title"><span class="num ex" aria-hidden="true">📒</span>記帳</h2>
+  <p class="ex-note">資料只存在這支手機，不會同步給其他人。建議由一個人記帳，並用「匯出」備份或傳到別的手機再「匯入」。</p>
+
+  <div class="card">
+    <div class="todo-head"><h3>匯率</h3><button type="button" class="ex-btn alt" id="exRateBtn">更新匯率</button></div>
+    <div class="ex-label">1 元台幣 ＝</div>
+    <div class="ex-row">
+      <input class="ex-field grow" id="exRateKrw" type="text" inputmode="decimal" aria-label="1 元台幣可換多少韓元">
+      <span>韓元</span>
+    </div>
+    <div class="ex-label">1,000 韓元 ＝</div>
+    <div class="ex-row">
+      <input class="ex-field grow" id="exRateTwd" type="text" inputmode="decimal" aria-label="1,000 韓元可換多少台幣">
+      <span>元台幣</span>
+    </div>
+    <p class="ex-muted" id="exRateMeta" style="margin-top:8px"></p>
+  </div>
+
+  <details class="ex-setup" id="exSetup">
+    <summary>成員與戶別<span class="ex-muted" id="exSetupCount"></span></summary>
+    <div class="ex-label">戶名</div>
+    <div id="exHouseholds"></div>
+    <div class="ex-row" style="margin-top:8px">
+      <button type="button" class="ex-btn alt" id="exAddHh">＋ 新增戶別</button>
+    </div>
+    <div class="ex-label">成員</div>
+    <div id="exMembers"></div>
+    <div class="ex-row" style="margin-top:8px">
+      <button type="button" class="ex-btn alt" id="exAddMem">＋ 新增成員</button>
+    </div>
+  </details>
+
+  <div class="card">
+    <div class="todo-head"><h3 id="exFormTitle">新增一筆</h3></div>
+    <div class="ex-label">日期</div>
+    <input class="ex-field" id="exDate" type="date">
+    <div class="ex-pills" style="margin-top:6px" id="exDatePills"></div>
+    <div class="ex-label">項目</div>
+    <input class="ex-field" id="exItem" type="text" maxlength="80" placeholder="例如：石火緣烤肉">
+    <div class="ex-label">分類</div>
+    <div class="ex-pills" id="exCats"></div>
+    <div class="ex-label">金額</div>
+    <div class="ex-row">
+      <input class="ex-field grow" id="exAmt" type="text" inputmode="decimal" placeholder="例如 57000">
+      <button type="button" class="ex-pill on" id="exCurKRW" data-cur="KRW">₩ 韓元</button>
+      <button type="button" class="ex-pill" id="exCurTWD" data-cur="TWD">NT$ 台幣</button>
+    </div>
+    <div class="ex-conv" id="exConv"></div>
+    <div class="ex-label">誰付錢</div>
+    <select class="ex-field" id="exPayer"></select>
+    <div class="ex-label">分攤給誰</div>
+    <div class="ex-pills" id="exSplitQuick"></div>
+    <div id="exSplit"></div>
+    <button type="button" class="ex-btn primary" id="exSave">新增</button>
+    <button type="button" class="ex-btn alt" id="exCancel" hidden style="width:100%;margin-top:8px">取消編輯</button>
+  </div>
+
+  <div class="card">
+    <div class="todo-head"><h3>支出紀錄</h3><span class="progress" id="exCount">0 筆</span></div>
+    <div id="exList"></div>
+  </div>
+
+  <div class="card ex-sum">
+    <div class="todo-head"><h3>結算</h3></div>
+    <div id="exSummary"></div>
+  </div>
+
+  <div class="card">
+    <div class="todo-head"><h3>備份</h3></div>
+    <div class="ex-row" style="margin-top:8px">
+      <button type="button" class="ex-btn" id="exExport">匯出</button>
+      <button type="button" class="ex-btn alt" id="exShare">分享</button>
+      <button type="button" class="ex-btn alt" id="exCsv">匯出 CSV</button>
+      <button type="button" class="ex-btn alt" id="exImportBtn">匯入</button>
+    </div>
+    <div class="ex-import" id="exImportBox" hidden>
+      <p class="ex-muted" style="margin:6px 0">貼上先前匯出的內容，會取代這支手機目前的記帳資料。</p>
+      <textarea id="exImportTa" placeholder="在這裡貼上匯出的資料"></textarea>
+      <button type="button" class="ex-btn primary" id="exImportGo">還原資料</button>
+    </div>
+  </div>
+</section>
+
 <footer>釜山 3天2夜・11/21 – 11/23・資訊以官方最新公告為準</footer>
 
 <script>
@@ -583,7 +726,7 @@ footer{text-align:center;font-size:12px;color:var(--muted);padding:18px 14px 0}
     window.scrollTo({top: Math.max(0,y), behavior: instant ? 'instant' : 'smooth'});
   }
   tabs.forEach(t => t.addEventListener('click', () => scrollToId(t.dataset.target)));
-  const secs = ['flights','itinerary','prep'].map(id=>document.getElementById(id));
+  const secs = ['flights','itinerary','prep','expense'].map(id=>document.getElementById(id));
   function onScroll(){
     const line = headerH() + 40;
     let active = 0;
@@ -770,6 +913,700 @@ footer{text-align:center;font-size:12px;color:var(--muted);padding:18px 14px 0}
       if (!shown) wxFallback('目前無法取得即時預報，先參考往年氣候。');
     }
   })();
+
+  /* ---------- expense bookkeeping ---------- */
+  const EX_KEY = 'busan-expense-v1';
+  const EX_RATE_DEFAULT = 40.49; /* 1 TWD = 40.49 KRW */
+  const EX_RATE_ASOF = '2026-11-18';
+  const EX_RATE_SRC = 'https://open.er-api.com/v6/latest/TWD';
+  const EX_CATS = [
+    {id:'food', n:'餐飲', e:'🍜'},
+    {id:'trans', n:'交通', e:'🚕'},
+    {id:'shop', n:'購物', e:'🛍️'},
+    {id:'ticket', n:'門票', e:'🎟️'},
+    {id:'other', n:'其他', e:'📝'}
+  ];
+  const EX_DAYS = [
+    {iso:'2026-11-21', label:'Day 1  11/21'},
+    {iso:'2026-11-22', label:'Day 2  11/22'},
+    {iso:'2026-11-23', label:'Day 3  11/23'}
+  ];
+
+  function exEsc(s){
+    return String(s==null?'':s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+  }
+  function exParseAmt(s){
+    const n = parseFloat(String(s).replace(/,/g, '').replace(/[^\d.-]/g, ''));
+    return Number.isFinite(n) ? n : NaN;
+  }
+  function exFmtInt(n){
+    return Math.round(Number(n)||0).toLocaleString('zh-TW');
+  }
+  function exKRW(n){ return '₩' + exFmtInt(n); }
+  function exTWD(n){ return 'NT$' + exFmtInt(n); }
+  function exToKRW(amount, currency, rate){ return currency === 'KRW' ? amount : amount * rate; }
+  function exToTWD(amount, currency, rate){ return currency === 'TWD' ? amount : (rate ? amount / rate : 0); }
+  function exUid(prefix){
+    exState.seq = (exState.seq||0) + 1;
+    return prefix + exState.seq;
+  }
+  function exDefaultState(){
+    return {
+      households: [
+        {id:'h1', name:'Leslie家'},
+        {id:'h2', name:'張老大家'},
+        {id:'h3', name:'Aaron家'}
+      ],
+      members: [
+        {id:'m1', name:'Leslie', hid:'h1'},
+        {id:'m2', name:'Kate', hid:'h1'},
+        {id:'m3', name:'張老闆', hid:'h2'},
+        {id:'m4', name:'張夫人', hid:'h2'},
+        {id:'m5', name:'張公子', hid:'h2'},
+        {id:'m6', name:'張妹妹', hid:'h2'},
+        {id:'m7', name:'Aaron', hid:'h3'},
+        {id:'m8', name:'mini', hid:'h3'},
+        {id:'m9', name:'陳姐姐', hid:'h3'},
+        {id:'m10', name:'陳妹妹', hid:'h3'}
+      ],
+      expenses: [],
+      rate: EX_RATE_DEFAULT,
+      rateSrc: 'default',
+      rateAt: EX_RATE_ASOF,
+      rateManual: false,
+      seq: 10
+    };
+  }
+  function exLoad(){
+    let raw = null;
+    try{ raw = JSON.parse(localStorage.getItem(EX_KEY)||''); }catch(e){ raw = null; }
+    const d = exDefaultState();
+    if (!raw || typeof raw !== 'object') return d;
+    if (Array.isArray(raw.households) && raw.households.length) d.households = raw.households;
+    if (Array.isArray(raw.members) && raw.members.length) d.members = raw.members;
+    if (Array.isArray(raw.expenses)) d.expenses = raw.expenses;
+    if (Number(raw.rate) > 0) d.rate = Number(raw.rate);
+    if (raw.rateSrc) d.rateSrc = raw.rateSrc;
+    if (raw.rateAt) d.rateAt = raw.rateAt;
+    d.rateManual = !!raw.rateManual;
+    d.seq = Math.max(Number(raw.seq)||0, 10);
+    return d;
+  }
+  function exSaveState(){
+    try{ localStorage.setItem(EX_KEY, JSON.stringify(exState)); }catch(e){}
+  }
+
+  let exState = exLoad();
+  let exEditId = null;
+  let exCur = 'KRW';
+  let exCat = 'food';
+  let exSplitIds = exState.members.map(m => m.id);
+
+  function exName(id){
+    const m = exState.members.find(x => x.id === id);
+    return m ? m.name : '（已刪除）';
+  }
+  function exHhName(id){
+    const h = exState.households.find(x => x.id === id);
+    return h ? h.name : '未分戶';
+  }
+  function exMembersOf(hid){ return exState.members.filter(m => m.hid === hid); }
+
+  function exPersonBalances(){
+    const rate = exState.rate;
+    const by = {};
+    exState.members.forEach(m => {
+      by[m.id] = {id:m.id, hid:m.hid, name:m.name, paidKRW:0, paidTWD:0, owedKRW:0, owedTWD:0, netKRW:0, netTWD:0};
+    });
+    exState.expenses.forEach(e => {
+      const split = (e.splitIds||[]).filter(id => by[id]);
+      if (!split.length) return;
+      const krw = exToKRW(e.amount, e.currency, rate);
+      const twd = exToTWD(e.amount, e.currency, rate);
+      if (by[e.payerId]) { by[e.payerId].paidKRW += krw; by[e.payerId].paidTWD += twd; }
+      const n = split.length;
+      split.forEach(id => { by[id].owedKRW += krw/n; by[id].owedTWD += twd/n; });
+    });
+    Object.values(by).forEach(b => { b.netKRW = b.paidKRW - b.owedKRW; b.netTWD = b.paidTWD - b.owedTWD; });
+    return by;
+  }
+  function exHouseholdBalances(personBy){
+    return exState.households.map(h => {
+      const acc = {id:h.id, name:h.name, paidKRW:0, paidTWD:0, owedKRW:0, owedTWD:0, netKRW:0, netTWD:0};
+      exMembersOf(h.id).forEach(m => {
+        const b = personBy[m.id]; if (!b) return;
+        acc.paidKRW += b.paidKRW; acc.paidTWD += b.paidTWD;
+        acc.owedKRW += b.owedKRW; acc.owedTWD += b.owedTWD;
+        acc.netKRW += b.netKRW; acc.netTWD += b.netTWD;
+      });
+      return acc;
+    });
+  }
+  function exRoundNetsToZero(values){
+    const rounded = values.map(v => Math.round(v));
+    let diff = rounded.reduce((a,b)=>a+b, 0);
+    if (diff === 0) return rounded;
+    const residuals = values.map((v,i) => v - rounded[i]);
+    const order = residuals.map((_,i)=>i).sort((a,b) => diff>0 ? residuals[a]-residuals[b] : residuals[b]-residuals[a]);
+    const step = diff>0 ? -1 : 1;
+    for (let k=0; k<Math.abs(diff); k++) rounded[order[k]] += step;
+    return rounded;
+  }
+  function exWithRounded(list){
+    const rK = exRoundNetsToZero(list.map(x => x.netKRW));
+    const rT = exRoundNetsToZero(list.map(x => x.netTWD));
+    return list.map((x,i) => Object.assign({}, x, {rKRW:rK[i], rTWD:rT[i]}));
+  }
+  function exSettle(items, key){
+    const debtors = [], creditors = [];
+    items.forEach(it => {
+      const n = it[key];
+      if (n < 0) debtors.push({id:it.id, name:it.name, amt:-n});
+      else if (n > 0) creditors.push({id:it.id, name:it.name, amt:n});
+    });
+    debtors.sort((a,b)=>b.amt-a.amt);
+    creditors.sort((a,b)=>b.amt-a.amt);
+    const transfers = [];
+    let i=0,j=0;
+    while (i<debtors.length && j<creditors.length){
+      const t = Math.min(debtors[i].amt, creditors[j].amt);
+      if (t>0) transfers.push({from:debtors[i].id, fromName:debtors[i].name, to:creditors[j].id, toName:creditors[j].name, amt:t});
+      debtors[i].amt -= t;
+      creditors[j].amt -= t;
+      if (debtors[i].amt===0) i++;
+      if (creditors[j].amt===0) j++;
+    }
+    return transfers;
+  }
+  function exZipSettle(a, b){
+    if (a.length && a.length===b.length && a.every((t,i)=>t.from===b[i].from && t.to===b[i].to)){
+      return a.map((t,i)=>({fromName:t.fromName, toName:t.toName, twd:t.amt, krw:b[i].amt}));
+    }
+    return a.map(t => ({fromName:t.fromName, toName:t.toName, twd:t.amt, krw:Math.round(t.amt * exState.rate)}));
+  }
+
+  function exRateLabel(){
+    if (exState.rateSrc === 'live' && exState.rateAt){
+      return '即時匯率（open.er-api.com，' + exFmtRateAt(exState.rateAt) + '）';
+    }
+    if (exState.rateManual) return '手動輸入的匯率';
+    return '預設匯率 2026/11/18（open.er-api.com）';
+  }
+  function exFmtRateAt(iso){
+    const d = new Date(iso);
+    if (isNaN(d) && /^\d{4}-\d{2}-\d{2}$/.test(iso)) {
+      const p = iso.split('-');
+      return Number(p[1]) + '/' + Number(p[2]);
+    }
+    if (isNaN(d)) return iso;
+    const parts = new Intl.DateTimeFormat('en-US',{timeZone:'Asia/Taipei',month:'numeric',day:'numeric',hour:'2-digit',minute:'2-digit',hour12:false}).formatToParts(d);
+    const g = t => (parts.find(p=>p.type===t)||{}).value||'';
+    return g('month') + '/' + g('day') + ' ' + g('hour') + ':' + g('minute') + '（台北時間）';
+  }
+
+  function exFillRateInputs(){
+    const r = Number(exState.rate);
+    document.getElementById('exRateKrw').value = (Math.round(r*10000)/10000).toString();
+    document.getElementById('exRateTwd').value = r ? (Math.round(1000/r*100)/100).toString() : '';
+    document.getElementById('exRateMeta').textContent = exRateLabel();
+  }
+  function exSetRate(rate, src, at){
+    if (!(rate>0)) return;
+    exState.rate = rate;
+    if (src === 'manual'){ exState.rateManual = true; exState.rateSrc = 'manual'; }
+    else {
+      exState.rateSrc = src;
+      exState.rateManual = false;
+      exState.rateAt = at || new Date().toISOString();
+    }
+    exSaveState();
+    exFillRateInputs();
+    exRenderConv();
+    exRenderList();
+    exRenderSummary();
+  }
+  async function exFetchRate(){
+    const btn = document.getElementById('exRateBtn');
+    btn.disabled = true; btn.textContent = '更新中…';
+    const ctrl = typeof AbortController!=='undefined' ? new AbortController() : null;
+    const t = setTimeout(()=>{ if(ctrl) ctrl.abort(); }, 6000);
+    try{
+      const res = await fetch(EX_RATE_SRC, ctrl?{signal:ctrl.signal}:{});
+      const data = await res.json();
+      const r = data && data.rates && Math.round(Number(data.rates.KRW)*100)/100;
+      if (!(r>0)) throw new Error('no rate');
+      const at = data.time_last_update_utc ? new Date(data.time_last_update_utc).toISOString() : new Date().toISOString();
+      exSetRate(r, 'live', at);
+      btn.textContent = '已更新';
+    }catch(e){
+      btn.textContent = '更新失敗';
+    }
+    clearTimeout(t);
+    setTimeout(()=>{ btn.disabled=false; btn.textContent='更新匯率'; }, 1600);
+  }
+
+  function exRenderSetup(){
+    document.getElementById('exSetupCount').textContent =
+      '（' + exState.members.length + ' 人・' + exState.households.length + ' 戶）';
+    document.getElementById('exHouseholds').innerHTML = exState.households.map(h =>
+      `<div class="ex-hh" data-hid="${exEsc(h.id)}">
+        <span class="htag">${exEsc(h.name.slice(0,1))}</span>
+        <input class="ex-field grow" data-hh-name="${exEsc(h.id)}" value="${exEsc(h.name)}" maxlength="20" aria-label="戶名">
+        <button type="button" class="ex-btn danger" data-hh-del="${exEsc(h.id)}" ${exMembersOf(h.id).length?'disabled':''} aria-label="刪除戶別">刪</button>
+      </div>`
+    ).join('');
+    document.getElementById('exMembers').innerHTML = exState.members.map(m =>
+      `<div class="ex-mem" data-mid="${exEsc(m.id)}">
+        <input class="ex-field" data-mem-name="${exEsc(m.id)}" value="${exEsc(m.name)}" maxlength="16" aria-label="成員名稱">
+        <select class="ex-field" data-mem-hh="${exEsc(m.id)}" aria-label="戶別">
+          ${exState.households.map(h=>`<option value="${exEsc(h.id)}"${h.id===m.hid?' selected':''}>${exEsc(h.name)}</option>`).join('')}
+        </select>
+        <button type="button" class="ex-btn danger" data-mem-del="${exEsc(m.id)}" aria-label="刪除成員">×</button>
+      </div>`
+    ).join('');
+    exRenderPayer();
+    exRenderSplit();
+  }
+  function exRenderPayer(){
+    const sel = document.getElementById('exPayer');
+    const cur = sel.value;
+    sel.innerHTML = exState.households.map(h => {
+      const ms = exMembersOf(h.id);
+      if (!ms.length) return '';
+      return `<optgroup label="${exEsc(h.name)}">${ms.map(m=>`<option value="${exEsc(m.id)}">${exEsc(m.name)}</option>`).join('')}</optgroup>`;
+    }).join('') + exState.members.filter(m=>!exState.households.some(h=>h.id===m.hid)).map(m=>`<option value="${exEsc(m.id)}">${exEsc(m.name)}</option>`).join('');
+    if (cur && [...sel.options].some(o=>o.value===cur)) sel.value = cur;
+  }
+  function exRenderSplitQuick(){
+    document.getElementById('exSplitQuick').innerHTML =
+      `<button type="button" class="ex-pill" data-split="all">全部</button>` +
+      exState.households.map(h=>`<button type="button" class="ex-pill" data-split-hh="${exEsc(h.id)}">${exEsc(h.name)}</button>`).join('') +
+      `<button type="button" class="ex-pill" data-split="none">清除</button>`;
+  }
+  function exRenderSplit(){
+    exRenderSplitQuick();
+    const set = new Set(exSplitIds);
+    document.getElementById('exSplit').innerHTML = exState.households.map(h => {
+      const ms = exMembersOf(h.id);
+      if (!ms.length) return '';
+      return `<div class="ex-splitg"><div class="hn">${exEsc(h.name)}</div><div class="ex-split">${
+        ms.map(m => `<button type="button" class="ex-ck${set.has(m.id)?' on':''}" data-split-id="${exEsc(m.id)}">${exEsc(m.name)}</button>`).join('')
+      }</div></div>`;
+    }).join('');
+    exSplitIds = exSplitIds.filter(id => exState.members.some(m=>m.id===id));
+  }
+  function exRenderCats(){
+    document.getElementById('exCats').innerHTML = EX_CATS.map(c =>
+      `<button type="button" class="ex-pill${exCat===c.id?' on':''}" data-cat="${c.id}">${c.e} ${c.n}</button>`
+    ).join('');
+  }
+  function exRenderDates(){
+    const val = document.getElementById('exDate').value;
+    document.getElementById('exDatePills').innerHTML =
+      EX_DAYS.map(d => `<button type="button" class="ex-pill${val===d.iso?' on':''}" data-day="${d.iso}">${d.label}</button>`).join('') +
+      `<button type="button" class="ex-pill${val===todayTPE?' on':''}" data-day="${todayTPE}">今天</button>`;
+  }
+  function exRenderConv(){
+    const amt = exParseAmt(document.getElementById('exAmt').value);
+    const el = document.getElementById('exConv');
+    document.getElementById('exCurKRW').classList.toggle('on', exCur==='KRW');
+    document.getElementById('exCurTWD').classList.toggle('on', exCur==='TWD');
+    if (!(amt>0)) { el.textContent = exCur==='KRW' ? '會同時顯示台幣金額' : '會同時顯示韓元金額'; return; }
+    if (exCur==='KRW') el.textContent = '約 ' + exTWD(exToTWD(amt,'KRW',exState.rate));
+    else el.textContent = '約 ' + exKRW(exToKRW(amt,'TWD',exState.rate));
+  }
+  function exCatMeta(id){ return EX_CATS.find(c=>c.id===id) || EX_CATS[4]; }
+
+  function exRenderList(){
+    const box = document.getElementById('exList');
+    const list = exState.expenses.slice().sort((a,b)=> (a.date<b.date?1:a.date>b.date?-1:0) || (b.id>a.id?1:-1));
+    document.getElementById('exCount').textContent = list.length + ' 筆';
+    if (!list.length){ box.innerHTML = '<p class="ex-empty">還沒有紀錄。上面新增第一筆吧。</p>'; return; }
+    box.innerHTML = list.map(e => {
+      const cat = exCatMeta(e.category);
+      const krw = exToKRW(e.amount, e.currency, exState.rate);
+      const twd = exToTWD(e.amount, e.currency, exState.rate);
+      const names = (e.splitIds||[]).map(exName);
+      const all = names.length === exState.members.length && exState.members.length>0;
+      const splitTxt = all ? '全員' : (names.join('、') || '—');
+      const d = (e.date||'').replace(/^2026-/,'').replace(/^(\d{2})-(\d{2})$/,'$1/$2');
+      return `<div class="ex-item">
+        <div class="ttl"><span class="cat">${cat.e}</span>${exEsc(e.item||'（未命名）')}</div>
+        <div class="amt">${exKRW(krw)}　${exTWD(twd)}</div>
+        <div class="meta">${exEsc(d)}・${exEsc(cat.n)}・${exEsc(exName(e.payerId))} 付款<br>分攤：${exEsc(splitTxt)}</div>
+        <div class="acts">
+          <button type="button" class="ex-btn alt" data-ex-edit="${exEsc(e.id)}">修改</button>
+          <button type="button" class="ex-btn danger" data-ex-del="${exEsc(e.id)}">刪除</button>
+        </div>
+      </div>`;
+    }).join('');
+  }
+
+  function exNetClass(n){ return n>0?'ex-pos':(n<0?'ex-neg':''); }
+  function exNetTxt(n, kind){
+    if (n>0) return '應收 ' + (kind==='TWD'?exTWD(n):exKRW(n));
+    if (n<0) return '應付 ' + (kind==='TWD'?exTWD(-n):exKRW(-n));
+    return '結清';
+  }
+  function exSettleHtml(title, rows){
+    if (!rows.length) return `<h4 class="ex-sub">${title}</h4><p class="ex-empty">目前互不欠款。</p>`;
+    return `<h4 class="ex-sub">${title}</h4><ul class="ex-settle">${rows.map(t =>
+      `<li><b>${exEsc(t.fromName)}</b> 付給 <b>${exEsc(t.toName)}</b><br>${exTWD(t.twd)}　${exKRW(t.krw)}</li>`
+    ).join('')}</ul>`;
+  }
+  function exRenderSummary(){
+    const box = document.getElementById('exSummary');
+    if (!exState.expenses.length){
+      box.innerHTML = '<p class="ex-empty">有支出紀錄後，這裡會算出每戶、每人該收或該付多少。</p>';
+      return;
+    }
+    const rate = exState.rate;
+    const totalKRW = exState.expenses.reduce((s,e)=>s+exToKRW(e.amount,e.currency,rate),0);
+    const totalTWD = exState.expenses.reduce((s,e)=>s+exToTWD(e.amount,e.currency,rate),0);
+    const personBy = exPersonBalances();
+    const persons = exWithRounded(exState.members.map(m => personBy[m.id]));
+    const households = exWithRounded(exHouseholdBalances(personBy));
+    const stHh = exZipSettle(exSettle(households,'rTWD'), exSettle(households,'rKRW'));
+    const stPs = exZipSettle(exSettle(persons,'rTWD'), exSettle(persons,'rKRW'));
+    const personRows = exState.households.map(h => {
+      const ms = persons.filter(p => p.hid===h.id);
+      if (!ms.length) return '';
+      const hh = households.find(x=>x.id===h.id);
+      return `<tr class="hhrow"><td colspan="4">${exEsc(h.name)}</td></tr>` +
+        ms.map(p => `<tr>
+          <td>${exEsc(p.name)}</td>
+          <td>${exKRW(p.paidKRW)}<br>${exTWD(p.paidTWD)}</td>
+          <td>${exKRW(p.owedKRW)}<br>${exTWD(p.owedTWD)}</td>
+          <td class="${exNetClass(p.rTWD)}">${exNetTxt(p.rKRW,'KRW')}<br>${exNetTxt(p.rTWD,'TWD')}</td>
+        </tr>`).join('') +
+        (hh ? `<tr><td>戶小計</td><td>${exKRW(hh.paidKRW)}<br>${exTWD(hh.paidTWD)}</td><td>${exKRW(hh.owedKRW)}<br>${exTWD(hh.owedTWD)}</td><td class="${exNetClass(hh.rTWD)}">${exNetTxt(hh.rKRW,'KRW')}<br>${exNetTxt(hh.rTWD,'TWD')}</td></tr>` : '');
+    }).join('');
+    box.innerHTML =
+      `<div class="ex-tot"><div class="ex-muted">支出合計</div><div class="big">${exKRW(totalKRW)}</div><div>${exTWD(totalTWD)}</div></div>` +
+      exSettleHtml('依戶結算（建議）', stHh) +
+      `<h4 class="ex-sub">各戶與各人明細</h4>
+       <table>
+         <thead><tr><th>誰</th><th>已付</th><th>應付份額</th><th>淨額</th></tr></thead>
+         <tbody>${personRows}</tbody>
+       </table>` +
+      exSettleHtml('依人結算', stPs);
+  }
+
+  function exResetForm(){
+    exEditId = null;
+    document.getElementById('exFormTitle').textContent = '新增一筆';
+    document.getElementById('exSave').textContent = '新增';
+    document.getElementById('exCancel').hidden = true;
+    document.getElementById('exItem').value = '';
+    document.getElementById('exAmt').value = '';
+    exCat = 'food';
+    exCur = 'KRW';
+    exSplitIds = exState.members.map(m=>m.id);
+    document.getElementById('exDate').value = todayTPE;
+    if (exState.members[0]) document.getElementById('exPayer').value = exState.members[0].id;
+    exRenderCats();
+    exRenderDates();
+    exRenderSplit();
+    exRenderConv();
+  }
+  function exFillForm(e){
+    exEditId = e.id;
+    document.getElementById('exFormTitle').textContent = '修改這一筆';
+    document.getElementById('exSave').textContent = '儲存';
+    document.getElementById('exCancel').hidden = false;
+    document.getElementById('exDate').value = e.date || todayTPE;
+    document.getElementById('exItem').value = e.item || '';
+    document.getElementById('exAmt').value = e.amount;
+    exCur = e.currency === 'TWD' ? 'TWD' : 'KRW';
+    exCat = e.category || 'other';
+    exSplitIds = (e.splitIds||[]).slice();
+    document.getElementById('exPayer').value = e.payerId;
+    exRenderCats();
+    exRenderDates();
+    exRenderSplit();
+    exRenderConv();
+    scrollToId('expense');
+  }
+  function exSubmit(){
+    const date = document.getElementById('exDate').value;
+    const item = document.getElementById('exItem').value.trim();
+    const amount = exParseAmt(document.getElementById('exAmt').value);
+    const payerId = document.getElementById('exPayer').value;
+    const splitIds = exSplitIds.filter(id => exState.members.some(m=>m.id===id));
+    if (!item){ alert('請填項目名稱'); return; }
+    if (!(amount>0)){ alert('請填大於 0 的金額'); return; }
+    if (!payerId){ alert('請選擇誰付錢'); return; }
+    if (!splitIds.length){ alert('請至少勾選一位分攤的人'); return; }
+    if (exCur==='KRW') {
+      if (Math.round(amount) !== amount && amount !== Math.floor(amount)) {
+        /* allow decimals but store as given */
+      }
+    }
+    const rec = {id: exEditId || exUid('e'), date, item, amount, currency:exCur, payerId, splitIds, category:exCat};
+    if (exEditId){
+      const i = exState.expenses.findIndex(x=>x.id===exEditId);
+      if (i>=0) exState.expenses[i] = rec;
+      else exState.expenses.push(rec);
+    } else {
+      exState.expenses.push(rec);
+    }
+    exSaveState();
+    exResetForm();
+    exRenderList();
+    exRenderSummary();
+  }
+  function exDelete(id){
+    const e = exState.expenses.find(x=>x.id===id);
+    if (!e) return;
+    if (!confirm('確定刪除「'+(e.item||'這一筆')+'」？')) return;
+    exState.expenses = exState.expenses.filter(x=>x.id!==id);
+    if (exEditId===id) exResetForm();
+    exSaveState();
+    exRenderList();
+    exRenderSummary();
+  }
+
+  function exExportText(){
+    return JSON.stringify({type:'busan-expense-v1', exportedAt:new Date().toISOString(), data:exState});
+  }
+  async function exCopy(text){
+    try{
+      if (navigator.clipboard && window.isSecureContext){
+        await navigator.clipboard.writeText(text);
+        return true;
+      }
+    }catch(e){}
+    const ta = document.createElement('textarea');
+    ta.value = text;
+    ta.setAttribute('readonly','');
+    ta.style.position='fixed'; ta.style.left='-9999px';
+    document.body.appendChild(ta);
+    ta.select(); ta.setSelectionRange(0, text.length);
+    let ok=false;
+    try{ ok = document.execCommand('copy'); }catch(e){}
+    document.body.removeChild(ta);
+    return ok;
+  }
+  function exFlash(btn, msg){
+    const old = btn.textContent;
+    btn.textContent = msg;
+    setTimeout(()=>{ btn.textContent = old; }, 1600);
+  }
+  async function exDoExport(){
+    const btn = document.getElementById('exExport');
+    const ok = await exCopy(exExportText());
+    exFlash(btn, ok ? '已複製' : '複製失敗，請改用分享');
+  }
+  async function exDoShare(){
+    const text = exExportText();
+    if (navigator.share){
+      try{ await navigator.share({title:'釜山記帳', text}); return; }catch(e){ if (e && e.name==='AbortError') return; }
+    }
+    const ok = await exCopy(text);
+    alert(ok ? '已複製記帳資料，可以貼到訊息傳給自己或同伴。' : '這支手機沒有分享功能，也無法自動複製，請改用匯出 CSV。');
+  }
+  function exCsvEscape(s){
+    const t = String(s==null?'':s);
+    if (/[",\n]/.test(t)) return '"' + t.replace(/"/g,'""') + '"';
+    return t;
+  }
+  function exToCsv(){
+    const rate = exState.rate;
+    const lines = [['日期','項目','分類','幣別','金額','韓元','台幣','付款人','分攤']];
+    exState.expenses.forEach(e => {
+      const cat = exCatMeta(e.category);
+      lines.push([
+        e.date||'', e.item||'', cat.n, e.currency, e.amount,
+        Math.round(exToKRW(e.amount,e.currency,rate)),
+        Math.round(exToTWD(e.amount,e.currency,rate)),
+        exName(e.payerId),
+        (e.splitIds||[]).map(exName).join('、')
+      ]);
+    });
+    return '\uFEFF' + lines.map(row => row.map(exCsvEscape).join(',')).join('\r\n');
+  }
+  function exDoCsv(){
+    const csv = exToCsv();
+    const blob = new Blob([csv], {type:'text/csv;charset=utf-8'});
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url; a.download = 'busan-expense.csv';
+    document.body.appendChild(a); a.click(); document.body.removeChild(a);
+    setTimeout(()=>URL.revokeObjectURL(url), 1500);
+  }
+  function exDoImport(){
+    const raw = document.getElementById('exImportTa').value.trim();
+    if (!raw){ alert('請先貼上匯出的資料'); return; }
+    let obj;
+    try{ obj = JSON.parse(raw); }catch(e){ alert('內容不是有效的資料，請貼上從本頁「匯出」的內容。'); return; }
+    const data = obj && obj.data && typeof obj.data==='object' ? obj.data : obj;
+    if (!data || !Array.isArray(data.members) || !Array.isArray(data.households) || !Array.isArray(data.expenses)){
+      alert('內容格式不對，請貼上從本頁「匯出」的內容。'); return;
+    }
+    if (!confirm('匯入後會取代這支手機目前的記帳資料，確定嗎？')) return;
+    exState = {
+      households: data.households,
+      members: data.members,
+      expenses: data.expenses,
+      rate: Number(data.rate)>0 ? Number(data.rate) : EX_RATE_DEFAULT,
+      rateSrc: data.rateSrc || 'manual',
+      rateAt: data.rateAt || '',
+      rateManual: !!data.rateManual,
+      seq: Math.max(Number(data.seq)||0, 10)
+    };
+    exSaveState();
+    exSplitIds = exState.members.map(m=>m.id);
+    exEditId = null;
+    exFillRateInputs();
+    exRenderSetup();
+    exResetForm();
+    exRenderList();
+    exRenderSummary();
+    document.getElementById('exImportBox').hidden = true;
+    document.getElementById('exImportTa').value = '';
+    alert('已還原記帳資料。');
+  }
+
+  /* bind */
+  document.getElementById('exRateBtn').addEventListener('click', exFetchRate);
+  document.getElementById('exRateKrw').addEventListener('change', e => {
+    const r = exParseAmt(e.target.value);
+    if (r>0) exSetRate(r, 'manual'); else exFillRateInputs();
+  });
+  document.getElementById('exRateTwd').addEventListener('change', e => {
+    const t = exParseAmt(e.target.value);
+    if (t>0) exSetRate(1000/t, 'manual'); else exFillRateInputs();
+  });
+  document.getElementById('exAddHh').addEventListener('click', () => {
+    const n = exState.households.length + 1;
+    exState.households.push({id:exUid('h'), name:'第'+n+'戶'});
+    exSaveState(); exRenderSetup();
+  });
+  document.getElementById('exAddMem').addEventListener('click', () => {
+    const hid = (exState.households[0]||{}).id;
+    exState.members.push({id:exUid('m'), name:'新成員', hid});
+    exSplitIds.push(exState.members[exState.members.length-1].id);
+    exSaveState(); exRenderSetup(); exRenderSummary();
+  });
+  document.getElementById('exHouseholds').addEventListener('change', e => {
+    const id = e.target.getAttribute('data-hh-name');
+    if (!id) return;
+    const h = exState.households.find(x=>x.id===id);
+    if (h){ h.name = e.target.value.trim() || h.name; exSaveState(); exRenderSetup(); exRenderSummary(); }
+  });
+  document.getElementById('exHouseholds').addEventListener('click', e => {
+    const btn = e.target.closest('[data-hh-del]'); if(!btn) return;
+    const id = btn.getAttribute('data-hh-del');
+    if (exMembersOf(id).length){ alert('請先把這一戶的成員改到別戶，再刪除。'); return; }
+    if (exState.households.length<=1){ alert('至少要保留一戶。'); return; }
+    exState.households = exState.households.filter(h=>h.id!==id);
+    exSaveState(); exRenderSetup(); exRenderSummary();
+  });
+  document.getElementById('exMembers').addEventListener('change', e => {
+    const nid = e.target.getAttribute('data-mem-name');
+    const hid = e.target.getAttribute('data-mem-hh');
+    if (nid){
+      const m = exState.members.find(x=>x.id===nid);
+      if (m){ m.name = e.target.value.trim() || m.name; exSaveState(); exRenderPayer(); exRenderList(); exRenderSummary(); }
+    }
+    if (hid){
+      const m = exState.members.find(x=>x.id===hid);
+      if (m){ m.hid = e.target.value; exSaveState(); exRenderSetup(); exRenderList(); exRenderSummary(); }
+    }
+  });
+  document.getElementById('exMembers').addEventListener('click', e => {
+    const btn = e.target.closest('[data-mem-del]'); if(!btn) return;
+    if (exState.members.length<=1){ alert('至少要保留一位成員。'); return; }
+    const id = btn.getAttribute('data-mem-del');
+    const m = exState.members.find(x=>x.id===id);
+    const usedPay = exState.expenses.some(x=>x.payerId===id);
+    const usedSplit = exState.expenses.some(x=> (x.splitIds||[]).includes(id));
+    if (usedPay || usedSplit){
+      if (!confirm('「'+(m?m.name:id)+'」已出現在記帳裡。刪除後，由他付款的紀錄會一併刪除，分攤名單也會拿掉他。確定嗎？')) return;
+      exState.expenses = exState.expenses.filter(x=>x.payerId!==id).map(x => Object.assign({}, x, {splitIds:(x.splitIds||[]).filter(s=>s!==id)})).filter(x=>x.splitIds.length);
+    }
+    exState.members = exState.members.filter(x=>x.id!==id);
+    exSplitIds = exSplitIds.filter(s=>s!==id);
+    exSaveState(); exRenderSetup(); exResetForm(); exRenderList(); exRenderSummary();
+  });
+  document.getElementById('exDate').addEventListener('change', exRenderDates);
+  document.getElementById('exDatePills').addEventListener('click', e => {
+    const b = e.target.closest('[data-day]'); if(!b) return;
+    document.getElementById('exDate').value = b.getAttribute('data-day');
+    exRenderDates();
+  });
+  document.getElementById('exCats').addEventListener('click', e => {
+    const b = e.target.closest('[data-cat]'); if(!b) return;
+    exCat = b.getAttribute('data-cat');
+    exRenderCats();
+  });
+  document.getElementById('exAmt').addEventListener('input', exRenderConv);
+  document.getElementById('exCurKRW').addEventListener('click', ()=>{ exCur='KRW'; exRenderConv(); });
+  document.getElementById('exCurTWD').addEventListener('click', ()=>{ exCur='TWD'; exRenderConv(); });
+  document.getElementById('exSplitQuick').addEventListener('click', e => {
+    const all = e.target.closest('[data-split="all"]');
+    const none = e.target.closest('[data-split="none"]');
+    const hh = e.target.closest('[data-split-hh]');
+    if (all){ exSplitIds = exState.members.map(m=>m.id); exRenderSplit(); return; }
+    if (none){ exSplitIds = []; exRenderSplit(); return; }
+    if (hh){
+      const ids = exMembersOf(hh.getAttribute('data-split-hh')).map(m=>m.id);
+      const set = new Set(exSplitIds);
+      const allOn = ids.every(id => set.has(id));
+      if (allOn) ids.forEach(id => set.delete(id));
+      else ids.forEach(id => set.add(id));
+      exSplitIds = [...set];
+      exRenderSplit();
+    }
+  });
+  document.getElementById('exSplit').addEventListener('click', e => {
+    const b = e.target.closest('[data-split-id]'); if(!b) return;
+    const id = b.getAttribute('data-split-id');
+    if (exSplitIds.includes(id)) exSplitIds = exSplitIds.filter(x=>x!==id);
+    else exSplitIds = exSplitIds.concat(id);
+    exRenderSplit();
+  });
+  document.getElementById('exSave').addEventListener('click', exSubmit);
+  document.getElementById('exCancel').addEventListener('click', exResetForm);
+  document.getElementById('exList').addEventListener('click', e => {
+    const ed = e.target.closest('[data-ex-edit]');
+    const del = e.target.closest('[data-ex-del]');
+    if (ed){
+      const rec = exState.expenses.find(x=>x.id===ed.getAttribute('data-ex-edit'));
+      if (rec) exFillForm(rec);
+    }
+    if (del) exDelete(del.getAttribute('data-ex-del'));
+  });
+  document.getElementById('exExport').addEventListener('click', exDoExport);
+  document.getElementById('exShare').addEventListener('click', exDoShare);
+  document.getElementById('exCsv').addEventListener('click', exDoCsv);
+  document.getElementById('exImportBtn').addEventListener('click', () => {
+    const box = document.getElementById('exImportBox');
+    box.hidden = !box.hidden;
+  });
+  document.getElementById('exImportGo').addEventListener('click', exDoImport);
+
+  document.getElementById('exDate').value = todayTPE;
+  exFillRateInputs();
+  exRenderSetup();
+  exRenderCats();
+  exRenderDates();
+  exRenderConv();
+  exRenderList();
+  exRenderSummary();
+
+  if (!exState.rateManual){
+    const rateDay = (function(iso){
+      if (!iso) return '';
+      if (/^\d{4}-\d{2}-\d{2}$/.test(iso)) return iso;
+      const d = new Date(iso);
+      if (isNaN(d)) return '';
+      return new Intl.DateTimeFormat('en-CA',{timeZone:'Asia/Taipei'}).format(d);
+    })(exState.rateAt);
+    if (!(exState.rateSrc==='live' && rateDay===todayTPE)){
+      exFetchRate().catch(()=>{});
+    }
+  }
 
   onScroll();
 })();
