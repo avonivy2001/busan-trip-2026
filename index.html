@@ -56,7 +56,8 @@ section{padding:22px 14px 4px;scroll-margin-top:128px}
 .card{background:var(--card);border:var(--bw) solid var(--ink);border-radius:var(--r);padding:14px;margin-bottom:12px}
 
 /* flights */
-.flight .head{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px}
+.flight .head{display:flex;justify-content:space-between;align-items:center;gap:6px;flex-wrap:wrap;margin-bottom:10px}
+.flight .fn{font-size:14px;border:2px solid var(--ink);border-radius:999px;padding:1px 10px;background:var(--yellow)}
 .tag{border:2px solid var(--ink);border-radius:999px;padding:1px 12px;font-size:14px}
 .tag.out{background:var(--red);color:#fff}
 .tag.back{background:var(--blue)}
@@ -355,7 +356,7 @@ footer{text-align:center;font-size:12px;color:var(--muted);padding:18px 14px 0}
   <h2 class="sec-title"><span class="num">1</span>航班</h2>
 
   <div class="card flight">
-    <div class="head"><span class="tag out">去程</span><span class="day">11/21 (六)</span></div>
+    <div class="head"><span class="tag out">去程</span><span class="fn">濟州航空 7C6152</span><span class="day">11/21 (六)</span></div>
     <div class="route">
       <div class="pt"><div class="t">12:15</div><div class="p">桃園 T1</div></div>
       <div class="mid">2h30m
@@ -366,7 +367,7 @@ footer{text-align:center;font-size:12px;color:var(--muted);padding:18px 14px 0}
   </div>
 
   <div class="card flight">
-    <div class="head"><span class="tag back">回程</span><span class="day">11/23 (一)</span></div>
+    <div class="head"><span class="tag back">回程</span><span class="fn">濟州航空 7C6163</span><span class="day">11/23 (一)</span></div>
     <div class="route">
       <div class="pt"><div class="t">22:00</div><div class="p">釜山 (PUS)</div></div>
       <div class="mid">2h50m
@@ -574,7 +575,7 @@ footer{text-align:center;font-size:12px;color:var(--muted);padding:18px 14px 0}
   /* ---------- itinerary data ---------- */
   const DAYS = [
     { key:'d1', d:'11/21', w:'六', title:'Day 1・廣安里烤肉＋無人機秀', theme:'廣安里', items:[
-      {t:'15:45', i:'plane', c:'blue', n:'抵達金海機場', s:'入境、領行李，預估 16:30–16:45 出關'},
+      {t:'15:45', i:'plane', c:'blue', n:'抵達金海機場', s:'濟州航空 7C6152；入境、領行李，預估 16:30–16:45 出關'},
       {t:'16:45', i:'car', c:'yellow', n:'機場 → 飯店', s:'已訂接送，約 35–45 分'},
       {t:'17:30', i:'hotel', c:'blue', n:'Hotel Ground27 入住', s:'入住 16:00 起，放好行李就出發', g:'Hotel Ground27 Busan', k:'호텔그라운드27'},
       {t:'17:45', i:'car', c:'yellow', n:'南浦 → 廣安里', s:'計程車 3 台，約 30–40 分；週六傍晚可能塞車'},
@@ -613,7 +614,7 @@ footer{text-align:center;font-size:12px;color:var(--muted);padding:18px 14px 0}
       {t:'16:40', i:'lipstick', c:'red', n:'Olive Young 南浦 Town 購物', s:'BIFF 廣場路 40，4 層樓，釜山最大間；每天 10:00–22:30；帶護照，付款前先問能否即時退稅', hl:true, star:'女生必逛', g:'Olive Young Nampo Town', k:'올리브영 남포 타운'},
       {t:'17:45', i:'bowl', c:'yellow', n:'南浦洞簡單晚餐', s:'BIFF 廣場小吃或附近餐廳，18:25 前吃完'},
       {t:'18:30', i:'lug', c:'blue', n:'回飯店拿行李', s:'18:45 已訂接送出發'},
-      {t:'19:30', i:'plane', c:'blue', n:'抵達金海機場報到', s:'22:00 起飛 → 23:50 桃園 T1', hl:true}
+      {t:'19:30', i:'plane', c:'blue', n:'抵達金海機場報到', s:'7C6163 22:00 起飛 → 23:50 桃園 T1', hl:true}
     ]}
   ];
 
@@ -688,7 +689,7 @@ footer{text-align:center;font-size:12px;color:var(--muted);padding:18px 14px 0}
     {id:'banobagi', m:'LINE 預約 BANOBAGI 3 人', s:'@banobagibs_tw・醫美組 3 人，11/23 10:00 起的時段'},
     {id:'clinic-q', m:'問診所：行李寄放、翻譯、退稅', s:'醫美退稅各來源說法不一，以診所為準'},
     {id:'keta', m:'確認 K-ETA 免申請', s:'台灣護照至 2026/12/31 免申請 K-ETA，可免簽停留 90 天'},
-    {id:'earrival', m:'填寫韓國電子入境申報 e-Arrival', s:'抵達前 3 天內（11/19 起，韓國時間）於 e-arrivalcard.go.kr 免費填寫'},
+    {id:'earrival', m:'填寫韓國電子入境申報 e-Arrival', s:'抵達前 3 天內（11/19 起，韓國時間）於 e-arrivalcard.go.kr 免費填寫。航班 7C6152；飯店 Hotel Ground27，91 Gwangbok-ro, Jung-gu, Busan 48952，+82-51-715-0017'},
     {id:'tmoney', m:'買 T-money 交通卡', s:'每人一張，地鐵轉乘有優惠'},
     {id:'transfer', m:'機場接送（已訂）', s:'11/21 16:45 機場 → 飯店、11/23 18:45 飯店 → 機場'},
     {id:'blueline', m:'海岸列車票（已訂 11/22 15:00 尾浦出發，10 人）', s:'全團 10 人，票在訂票者手機；提早 10–15 分到尾浦站'},
