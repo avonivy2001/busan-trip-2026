@@ -469,6 +469,11 @@ footer{text-align:center;font-size:12px;color:var(--muted);padding:18px 14px 0}
       <input class="ex-field grow" id="exRateTwd" type="text" inputmode="decimal" aria-label="1,000 韓元可換多少台幣">
       <span>元台幣</span>
     </div>
+    <div class="ex-label">1 人民幣 ＝</div>
+    <div class="ex-row">
+      <input class="ex-field grow" id="exRateCny" type="text" inputmode="decimal" aria-label="1 人民幣可換多少台幣">
+      <span>元台幣</span>
+    </div>
     <p class="ex-muted" id="exRateMeta" style="margin-top:8px"></p>
   </div>
 
@@ -498,8 +503,11 @@ footer{text-align:center;font-size:12px;color:var(--muted);padding:18px 14px 0}
     <div class="ex-label">金額</div>
     <div class="ex-row">
       <input class="ex-field grow" id="exAmt" type="text" inputmode="decimal" placeholder="例如 57000">
+    </div>
+    <div class="ex-pills" style="margin-top:6px">
       <button type="button" class="ex-pill on" id="exCurKRW" data-cur="KRW">₩ 韓元</button>
       <button type="button" class="ex-pill" id="exCurTWD" data-cur="TWD">NT$ 台幣</button>
+      <button type="button" class="ex-pill" id="exCurCNY" data-cur="CNY">¥ 人民幣</button>
     </div>
     <div class="ex-conv" id="exConv"></div>
     <div class="ex-label">誰付錢</div>
@@ -919,6 +927,8 @@ footer{text-align:center;font-size:12px;color:var(--muted);padding:18px 14px 0}
   const EX_KEY = 'busan-expense-v1';
   const EX_RATE_DEFAULT = 40.49; /* 1 TWD = 40.49 KRW */
   const EX_RATE_ASOF = '2026-11-18';
+  const EX_CNY_DEFAULT = 4.94; /* 1 CNY = 4.94 TWD */
+  const EX_CNY_ASOF = '2026-11-20';
   const EX_RATE_SRC = 'https://open.er-api.com/v6/latest/TWD';
   const EX_CATS = [
     {id:'food', n:'餐飲', e:'🍜'},
@@ -945,8 +955,25 @@ footer{text-align:center;font-size:12px;color:var(--muted);padding:18px 14px 0}
   }
   function exKRW(n){ return '₩' + exFmtInt(n); }
   function exTWD(n){ return 'NT$' + exFmtInt(n); }
-  function exToKRW(amount, currency, rate){ return currency === 'KRW' ? amount : amount * rate; }
-  function exToTWD(amount, currency, rate){ return currency === 'TWD' ? amount : (rate ? amount / rate : 0); }
+  function exCNY(n){ return '¥' + exFmtInt(n); }
+  function exToTWD(amount, currency, rate, cnyRate){
+    const r = rate != null ? rate : (exState && exState.rate);
+    const c = cnyRate != null ? cnyRate : (exState && exState.cnyRate);
+    if (currency === 'TWD') return amount;
+    if (currency === 'KRW') return r ? amount / r : 0;
+    if (currency === 'CNY') return amount * (c || 0);
+    return 0;
+  }
+  function exToKRW(amount, currency, rate, cnyRate){
+    const r = rate != null ? rate : (exState && exState.rate);
+    if (currency === 'KRW') return amount;
+    return exToTWD(amount, currency, r, cnyRate) * (r || 0);
+  }
+  function exToCNY(amount, currency, rate, cnyRate){
+    const c = cnyRate != null ? cnyRate : (exState && exState.cnyRate);
+    if (currency === 'CNY') return amount;
+    return c ? exToTWD(amount, currency, rate, c) / c : 0;
+  }
   function exUid(prefix){
     exState.seq = (exState.seq||0) + 1;
     return prefix + exState.seq;
@@ -975,6 +1002,9 @@ footer{text-align:center;font-size:12px;color:var(--muted);padding:18px 14px 0}
       rateSrc: 'default',
       rateAt: EX_RATE_ASOF,
       rateManual: false,
+      cnyRate: EX_CNY_DEFAULT,
+      cnyRateSrc: 'default',
+      cnyRateManual: false,
       seq: 10
     };
   }
@@ -990,6 +1020,9 @@ footer{text-align:center;font-size:12px;color:var(--muted);padding:18px 14px 0}
     if (raw.rateSrc) d.rateSrc = raw.rateSrc;
     if (raw.rateAt) d.rateAt = raw.rateAt;
     d.rateManual = !!raw.rateManual;
+    if (Number(raw.cnyRate) > 0) d.cnyRate = Number(raw.cnyRate);
+    if (raw.cnyRateSrc) d.cnyRateSrc = raw.cnyRateSrc;
+    d.cnyRateManual = !!raw.cnyRateManual;
     d.seq = Math.max(Number(raw.seq)||0, 10);
     return d;
   }
@@ -1109,6 +1142,8 @@ footer{text-align:center;font-size:12px;color:var(--muted);padding:18px 14px 0}
     const r = Number(exState.rate);
     document.getElementById('exRateKrw').value = (Math.round(r*10000)/10000).toString();
     document.getElementById('exRateTwd').value = r ? (Math.round(1000/r*100)/100).toString() : '';
+    const c = Number(exState.cnyRate);
+    document.getElementById('exRateCny').value = (Math.round(c*10000)/10000).toString();
     document.getElementById('exRateMeta').textContent = exRateLabel();
   }
   function exSetRate(rate, src, at){
@@ -1126,6 +1161,24 @@ footer{text-align:center;font-size:12px;color:var(--muted);padding:18px 14px 0}
     exRenderList();
     exRenderSummary();
   }
+  function exSetCnyRate(cny, src){
+    if (!(cny>0)) return;
+    exState.cnyRate = cny;
+    if (src === 'manual'){ exState.cnyRateManual = true; exState.cnyRateSrc = 'manual'; }
+    else { exState.cnyRateManual = false; exState.cnyRateSrc = src; }
+    exSaveState();
+    exFillRateInputs();
+    exRenderConv();
+    exRenderList();
+    exRenderSummary();
+  }
+  function exApplyRates(){
+    exSaveState();
+    exFillRateInputs();
+    exRenderConv();
+    exRenderList();
+    exRenderSummary();
+  }
   async function exFetchRate(){
     const btn = document.getElementById('exRateBtn');
     btn.disabled = true; btn.textContent = '更新中…';
@@ -1135,9 +1188,21 @@ footer{text-align:center;font-size:12px;color:var(--muted);padding:18px 14px 0}
       const res = await fetch(EX_RATE_SRC, ctrl?{signal:ctrl.signal}:{});
       const data = await res.json();
       const r = data && data.rates && Math.round(Number(data.rates.KRW)*100)/100;
-      if (!(r>0)) throw new Error('no rate');
+      const cnyPerTwd = data && data.rates && Number(data.rates.CNY);
+      const twdPerCny = cnyPerTwd>0 ? Math.round((1/cnyPerTwd)*100)/100 : 0;
+      if (!(r>0) && !(twdPerCny>0)) throw new Error('no rate');
       const at = data.time_last_update_utc ? new Date(data.time_last_update_utc).toISOString() : new Date().toISOString();
-      exSetRate(r, 'live', at);
+      if (r>0 && !exState.rateManual){
+        exState.rate = r;
+        exState.rateSrc = 'live';
+        exState.rateAt = at;
+      }
+      if (twdPerCny>0 && !exState.cnyRateManual){
+        exState.cnyRate = twdPerCny;
+        exState.cnyRateSrc = 'live';
+        if (!exState.rateAt) exState.rateAt = at;
+      }
+      exApplyRates();
       btn.textContent = '已更新';
     }catch(e){
       btn.textContent = '更新失敗';
@@ -1212,9 +1277,14 @@ footer{text-align:center;font-size:12px;color:var(--muted);padding:18px 14px 0}
     const el = document.getElementById('exConv');
     document.getElementById('exCurKRW').classList.toggle('on', exCur==='KRW');
     document.getElementById('exCurTWD').classList.toggle('on', exCur==='TWD');
-    if (!(amt>0)) { el.textContent = exCur==='KRW' ? '會同時顯示台幣金額' : '會同時顯示韓元金額'; return; }
-    if (exCur==='KRW') el.textContent = '約 ' + exTWD(exToTWD(amt,'KRW',exState.rate));
-    else el.textContent = '約 ' + exKRW(exToKRW(amt,'TWD',exState.rate));
+    document.getElementById('exCurCNY').classList.toggle('on', exCur==='CNY');
+    if (!(amt>0)) {
+      el.textContent = exCur==='CNY' ? '會同時顯示台幣和韓元金額' : (exCur==='KRW' ? '會同時顯示台幣金額' : '會同時顯示韓元金額');
+      return;
+    }
+    if (exCur==='KRW') el.textContent = '約 ' + exTWD(exToTWD(amt,'KRW'));
+    else if (exCur==='TWD') el.textContent = '約 ' + exKRW(exToKRW(amt,'TWD'));
+    else el.textContent = '約 ' + exTWD(exToTWD(amt,'CNY')) + '　約 ' + exKRW(exToKRW(amt,'CNY'));
   }
   function exCatMeta(id){ return EX_CATS.find(c=>c.id===id) || EX_CATS[4]; }
 
@@ -1231,9 +1301,10 @@ footer{text-align:center;font-size:12px;color:var(--muted);padding:18px 14px 0}
       const all = names.length === exState.members.length && exState.members.length>0;
       const splitTxt = all ? '全員' : (names.join('、') || '—');
       const d = (e.date||'').replace(/^2026-/,'').replace(/^(\d{2})-(\d{2})$/,'$1/$2');
+      const amtLine = (e.currency==='CNY' ? exCNY(e.amount) + '　' : '') + exKRW(krw) + '　' + exTWD(twd);
       return `<div class="ex-item">
         <div class="ttl"><span class="cat">${cat.e}</span>${exEsc(e.item||'（未命名）')}</div>
-        <div class="amt">${exKRW(krw)}　${exTWD(twd)}</div>
+        <div class="amt">${amtLine}</div>
         <div class="meta">${exEsc(d)}・${exEsc(cat.n)}・${exEsc(exName(e.payerId))} 付款<br>分攤：${exEsc(splitTxt)}</div>
         <div class="acts">
           <button type="button" class="ex-btn alt" data-ex-edit="${exEsc(e.id)}">修改</button>
@@ -1318,7 +1389,7 @@ footer{text-align:center;font-size:12px;color:var(--muted);padding:18px 14px 0}
     document.getElementById('exDate').value = e.date || todayTPE;
     document.getElementById('exItem').value = e.item || '';
     document.getElementById('exAmt').value = e.amount;
-    exCur = e.currency === 'TWD' ? 'TWD' : 'KRW';
+    exCur = (e.currency === 'TWD' || e.currency === 'CNY') ? e.currency : 'KRW';
     exCat = e.category || 'other';
     exSplitIds = (e.splitIds||[]).slice();
     document.getElementById('exPayer').value = e.payerId;
@@ -1413,13 +1484,14 @@ footer{text-align:center;font-size:12px;color:var(--muted);padding:18px 14px 0}
   }
   function exToCsv(){
     const rate = exState.rate;
-    const lines = [['日期','項目','分類','幣別','金額','韓元','台幣','付款人','分攤']];
+    const lines = [['日期','項目','分類','幣別','金額','韓元','台幣','人民幣','付款人','分攤']];
     exState.expenses.forEach(e => {
       const cat = exCatMeta(e.category);
       lines.push([
         e.date||'', e.item||'', cat.n, e.currency, e.amount,
         Math.round(exToKRW(e.amount,e.currency,rate)),
         Math.round(exToTWD(e.amount,e.currency,rate)),
+        Math.round(exToCNY(e.amount,e.currency,rate)),
         exName(e.payerId),
         (e.splitIds||[]).map(exName).join('、')
       ]);
@@ -1453,6 +1525,9 @@ footer{text-align:center;font-size:12px;color:var(--muted);padding:18px 14px 0}
       rateSrc: data.rateSrc || 'manual',
       rateAt: data.rateAt || '',
       rateManual: !!data.rateManual,
+      cnyRate: Number(data.cnyRate)>0 ? Number(data.cnyRate) : EX_CNY_DEFAULT,
+      cnyRateSrc: data.cnyRateSrc || (Number(data.cnyRate)>0 ? 'manual' : 'default'),
+      cnyRateManual: !!data.cnyRateManual,
       seq: Math.max(Number(data.seq)||0, 10)
     };
     exSaveState();
@@ -1477,6 +1552,10 @@ footer{text-align:center;font-size:12px;color:var(--muted);padding:18px 14px 0}
   document.getElementById('exRateTwd').addEventListener('change', e => {
     const t = exParseAmt(e.target.value);
     if (t>0) exSetRate(1000/t, 'manual'); else exFillRateInputs();
+  });
+  document.getElementById('exRateCny').addEventListener('change', e => {
+    const c = exParseAmt(e.target.value);
+    if (c>0) exSetCnyRate(c, 'manual'); else exFillRateInputs();
   });
   document.getElementById('exAddHh').addEventListener('click', () => {
     const n = exState.households.length + 1;
@@ -1544,6 +1623,7 @@ footer{text-align:center;font-size:12px;color:var(--muted);padding:18px 14px 0}
   document.getElementById('exAmt').addEventListener('input', exRenderConv);
   document.getElementById('exCurKRW').addEventListener('click', ()=>{ exCur='KRW'; exRenderConv(); });
   document.getElementById('exCurTWD').addEventListener('click', ()=>{ exCur='TWD'; exRenderConv(); });
+  document.getElementById('exCurCNY').addEventListener('click', ()=>{ exCur='CNY'; exRenderConv(); });
   document.getElementById('exSplitQuick').addEventListener('click', e => {
     const all = e.target.closest('[data-split="all"]');
     const none = e.target.closest('[data-split="none"]');
@@ -1596,7 +1676,7 @@ footer{text-align:center;font-size:12px;color:var(--muted);padding:18px 14px 0}
   exRenderList();
   exRenderSummary();
 
-  if (!exState.rateManual){
+  if (!exState.rateManual || !exState.cnyRateManual){
     const rateDay = (function(iso){
       if (!iso) return '';
       if (/^\d{4}-\d{2}-\d{2}$/.test(iso)) return iso;
@@ -1604,7 +1684,9 @@ footer{text-align:center;font-size:12px;color:var(--muted);padding:18px 14px 0}
       if (isNaN(d)) return '';
       return new Intl.DateTimeFormat('en-CA',{timeZone:'Asia/Taipei'}).format(d);
     })(exState.rateAt);
-    if (!(exState.rateSrc==='live' && rateDay===todayTPE)){
+    const krwFresh = exState.rateSrc==='live' && rateDay===todayTPE;
+    const cnyFresh = exState.cnyRateSrc==='live' && rateDay===todayTPE;
+    if ((!exState.rateManual && !krwFresh) || (!exState.cnyRateManual && !cnyFresh)){
       exFetchRate().catch(()=>{});
     }
   }
